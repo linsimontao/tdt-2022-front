@@ -2,17 +2,13 @@ importScripts('//unpkg.com/@turf/turf@6.3.0/turf.min.js');
 
 const updateRiders = (courseLinestring, ridersArr, millisec) => (
     ridersArr.map(rider => {
-        if (Math.random() > 0.5) {
-            return rider;
-        } else {
-            return {
-                dis: rider.dis + (millisec * 10 / (1000)),
-                geojson: turf.along(
-                    courseLinestring,
-                    rider.dis + (millisec * 10 / (1000)),
-                    { units: "meters" }
-                )
-            }
+        return {
+            dis: rider.dis + (millisec * 10 / (1000)),
+            geojson: turf.along(
+                courseLinestring,
+                rider.dis + (millisec * 10 / (1000)),
+                { units: "meters" }
+            )
         }
     })
 )

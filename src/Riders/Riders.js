@@ -3,6 +3,7 @@ import { useCourseData } from '../Data/useCourseData';
 import { RidersData } from '../Data/RidersData';
 import { Map } from '../Map/MapLiveRiders';
 import { lineString } from '@turf/turf';
+import './RidersMap.css';
 
 const Riders = () => {
     const course = useCourseData();

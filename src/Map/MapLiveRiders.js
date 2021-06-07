@@ -116,6 +116,6 @@ export const Map = ({ courseLinestring, riders }) => {
     }, [map]);
 
     return (
-        <div ref={mapRef} className='map' />
+        <div ref={mapRef} className='map-live' />
     );
 }
