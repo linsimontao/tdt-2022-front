@@ -1,6 +1,8 @@
 import Navbar from './NavBar';
-import Home from './Home/Home';
+import Home from './Course/Home';
 import About from './About/About';
+import Riders from './Riders/Riders';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -16,6 +18,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/live">
+              <Riders />
             </Route>
             <Route exact path="/about">
               <About />

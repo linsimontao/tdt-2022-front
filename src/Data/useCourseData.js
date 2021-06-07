@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { csv } from 'd3';
 
-export const useData = () => {
+export const useCourseData = () => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
