@@ -97,11 +97,15 @@ export const Map = () => {
                 setAnimation(true);
             });
 
-            return () => map.remove();
+            return () => {
+                setAnimation(false);
+                map.remove();
+            }
         }, []
     );
 
     useEffect(() => {
+        let myReq = null;
         if (animation && map) {
             map.once('idle').then(() => {
                 const animationDuration = 100000;
@@ -111,7 +115,6 @@ export const Map = () => {
                     const animationPhase = (time - start) / animationDuration;
                     if (animationPhase > 1) {
                         setAnimation(false);
-                        return;
                     }
 
                     const currentDistance = courseDistance * animationPhase;
@@ -132,12 +135,13 @@ export const Map = () => {
                     const rotation = -animationPhase * 200.0;
                     map.setBearing(rotation % 360);
 
-                    requestAnimationFrame(frame);
+                    myReq = requestAnimationFrame(frame);
                 }
-                requestAnimationFrame(frame);
+                myReq =requestAnimationFrame(frame);
             })
         }
-    }, [map, animation]);
+        return () => cancelAnimationFrame(myReq);
+    }, [animation]);
 
     useEffect(() => {
         if (map && !animation) {
