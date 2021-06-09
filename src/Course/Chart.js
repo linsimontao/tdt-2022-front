@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
+import { courseContext } from './Home';
 import {
     scaleLinear,
     axisBottom,
@@ -9,6 +10,7 @@ import {
     line,
     curveCardinal
 } from 'd3';
+import { lineString, lineDistance } from '@turf/turf';
 
 const useResizeObserver = ref => {
     const [dimension, setDimension] = useState(null);
@@ -27,24 +29,30 @@ const useResizeObserver = ref => {
     return dimension;
 }
 
-export const Chart = ({ data, setPointData }) => {
+export const Chart = () => {
     const svgRef = useRef();
     const divRef = useRef();
     const brushRef = useRef();
 
     const dimension = useResizeObserver(divRef);
 
+    const { courseData, distance, setDistance, animation, setAnimation } = useContext(courseContext)
+    const courseLineString = lineString(courseData.map(d => d.coordinates));
+    const courseDistance = lineDistance(courseLineString);
+
+    //useCallback?
+    const findIdx = dis => courseData.filter(pt => pt.distance <= dis).length;
+
     useEffect(() => {
         const svg = select(svgRef.current);
         if (!dimension) return;
         const { width, height } = dimension;
-
         const xScale = scaleLinear()
-            .domain([0, data.length])
+            .domain([0, courseDistance])
             .range([0, width]);
         const xAxis = axisBottom(xScale);
         const yScale = scaleLinear()
-            .domain([min(data.map(d => d.elevation)), max(data.map(d => d.elevation))])
+            .domain([min(courseData.map(d => d.elevation)), max(courseData.map(d => d.elevation))])
             .range([height, 0]);
         const yAxis = axisLeft(yScale);
 
@@ -58,7 +66,7 @@ export const Chart = ({ data, setPointData }) => {
             .call(yAxis)
 
         const lineGenerator = line()
-            .x((d, i) => xScale(i))
+            .x((d, i) => xScale(courseData[i].distance))
             .y(yScale)
             .curve(curveCardinal);
 
@@ -66,31 +74,46 @@ export const Chart = ({ data, setPointData }) => {
 
         content
             .selectAll(".link")
-            .data([data.map(d => d.elevation)])
+            .data([courseData.map(d => d.elevation)])
             .join("path")
             .attr("class", "link")
             .attr("d", lineGenerator)
             .attr("fill", "none")
             .attr("stroke", "blue");
-
+        
         svg.on('mousemove', (evt) => {
-            if (evt.offsetX >= 0) {
-                const index = Math.floor(xScale.invert(evt.offsetX));
-                const temp = data[index];
+            if (!animation && evt.offsetX >= 0) {
+                const dis = xScale.invert(evt.offsetX);
+                setDistance(dis);
+                const index = findIdx(dis);
+                const pt = courseData[index];
                 content
                     .selectAll(".dot")
-                    .data([temp])
+                    .data([pt])
                     .join("circle")
                     .attr("class", "dot")
-                    .attr("cx", xScale(index))
-                    .attr("cy", yScale(temp.elevation))
+                    .attr("cx", xScale(pt.distance))
+                    .attr("cy", yScale(pt.elevation))
                     .attr("r", 3)
                     .attr("fill", "red");
-                setPointData(temp);
             }
-
         })
-    }, [data, dimension])
+
+        if (animation) {
+            const idx = findIdx(distance);
+            const pt = courseData[idx];
+            content
+                    .selectAll(".dot")
+                    .data([pt])
+                    .join("circle")
+                    .attr("class", "dot")
+                    .attr("cx", xScale(pt.distance))
+                    .attr("cy", yScale(pt.elevation))
+                    .attr("r", 3)
+                    .attr("fill", "red");
+        }
+
+    }, [dimension, animation, distance])
 
     return (
         <div className="chartContainer" ref={divRef}>

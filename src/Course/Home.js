@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import './Home.css'
 import { Map } from '../Map/MapCourse';
 import { Chart } from './Chart'
 import { useCourseData } from '../Data/useCourseData';
 
-const Home = () => {
-    const data = useCourseData();
-    const [pointData, setPointData] = useState(null);
+export const courseContext = createContext();
 
-    if (!data) {
+const Home = () => {
+    const courseData = useCourseData();
+    const [distance, setDistance] = useState(0);
+    const [animation, setAnimation] = useState(false);
+    
+    if (!courseData) {
         return <p>Loading</p>;
     }
-
+    
     return (
-        <React.Fragment>
-            <Map pointData={pointData} />
-            <Chart data={data} setPointData={setPointData} />
-        </React.Fragment>
+        <courseContext.Provider value={{courseData, distance, setDistance, animation, setAnimation}}>
+            <React.Fragment>
+                <Map />
+                <Chart />
+            </React.Fragment>
+        </courseContext.Provider>
     );
 }
 

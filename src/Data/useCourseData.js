@@ -10,7 +10,8 @@ export const useCourseData = () => {
             res.map((item) => {
                 temp.push({
                     coordinates: [item.lon, item.lat],
-                    elevation: Number(item.ele)
+                    elevation: Number(item.ele),
+                    distance: Number(item.dis)
                 });
             });
             setData(temp);

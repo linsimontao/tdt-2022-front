@@ -1,19 +1,37 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { courseContext } from '../Course/Home';
+import { lineString, lineDistance, along } from '@turf/turf';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 
 const initialMapState = {
     lng: 141.395,
     lat: 38.487,
-    zoom: 12,
+    zoom: 11,
     pitch: 60,
     bearing: 0
 }
+const marker = new mapboxgl.Marker({
+    color: 'red',
+    scale: 0.8,
+    draggable: false,
+    pitchAlignment: 'auto',
+    rotationAlignment: 'auto'
+});
+const popup = new mapboxgl.Popup({ closeButton: false });
 
-export const Map = ({ pointData }) => {
+export const Map = () => {
     const mapRef = useRef(null);
     const [map, setMap] = useState();
+
+    const { courseData, distance, setDistance, animation, setAnimation } = useContext(courseContext)
+    //usememo
+    const courseLinestring = lineString(
+        courseData.map(d => d.coordinates)
+    );
+    const courseDistance = lineDistance(courseLinestring);
+
     useEffect(
         () => {
             const map = new mapboxgl.Map({
@@ -46,40 +64,87 @@ export const Map = ({ pointData }) => {
                     }
                 });
 
-                map.addSource('point', {
-                    'type': 'geojson',
-                    'data': {
-                        'type': 'Point',
-                        'coordinates': []
+                map.addSource('line', {
+                    type: 'geojson',
+                    lineMetrics: true,
+                    data: {
+                        "type": "FeatureCollection",
+                        "features": [
+                            courseLinestring
+                        ]
                     }
                 });
 
                 map.addLayer({
-                    'id': 'point',
-                    'source': 'point',
-                    'type': 'circle',
-                    'paint': {
-                        'circle-radius': 10,
-                        'circle-color': '#007cbf'
+                    type: 'line',
+                    source: 'line',
+                    id: 'line',
+                    paint: {
+                        'line-color': 'rgba(0,0,0,0)',
+                        'line-width': 5
+                    },
+                    layout: {
+                        'line-cap': 'round',
+                        'line-join': 'round'
                     }
                 });
+                marker
+                    .setLngLat(courseData[0].coordinates)
+                    .setPopup(popup)
+                    .addTo(map)
+                    .togglePopup();
+                setMap(map);
+                setAnimation(true);
             });
-            setMap(map);
+
             return () => map.remove();
         }, []
     );
 
     useEffect(() => {
-        if (map) {
-            const pointSource = map.getSource('point');
-            if (pointSource) {
-                pointSource.setData({
-                    'type': 'Point',
-                    'coordinates': pointData.coordinates
-                });
-            }
+        if (animation && map) {
+            map.once('idle').then(() => {
+                const animationDuration = 100000;
+                let start;
+                function frame(time) {
+                    if (!start) start = time;
+                    const animationPhase = (time - start) / animationDuration;
+                    if (animationPhase > 1) {
+                        setAnimation(false);
+                        return;
+                    }
+
+                    const currentDistance = courseDistance * animationPhase;
+                    setDistance(currentDistance);
+                    const index = courseData.filter(pt => pt.distance < currentDistance).length;
+                    
+                    popup.setHTML('Altitude: ' + courseData[index].elevation + 'm<br/>');
+                    marker.setLngLat(courseData[index].coordinates);
+
+                    map.setPaintProperty('line', 'line-gradient', [
+                        'step',
+                        ['line-progress'],
+                        'red',
+                        animationPhase,
+                        'rgba(255, 0, 0, 0)'
+                    ]);
+
+                    const rotation = -animationPhase * 200.0;
+                    map.setBearing(rotation % 360);
+
+                    requestAnimationFrame(frame);
+                }
+                requestAnimationFrame(frame);
+            })
         }
-    }, [map, pointData]);
+    }, [map, animation]);
+
+    useEffect(() => {
+        if (map && !animation) {
+            const index = courseData.filter(pt => pt.distance < distance).length;
+            marker.setLngLat(courseData[index].coordinates);
+        }
+    }, [map, animation, distance]);
 
     return (
         <div ref={mapRef} className='map' />
