@@ -8,7 +8,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 const initialMapState = {
     lng: 141.395,
     lat: 38.487,
-    zoom: 11,
+    zoom: 11.5,
     pitch: 60,
     bearing: 0
 }
@@ -108,22 +108,26 @@ export const Map = () => {
         let myReq = null;
         if (animation && map) {
             map.once('idle').then(() => {
-                const animationDuration = 100000;
+                const animationDuration = 60000;
                 let start;
                 function frame(time) {
                     if (!start) start = time;
                     const animationPhase = (time - start) / animationDuration;
                     if (animationPhase > 1) {
                         setAnimation(false);
+                        return () => cancelAnimationFrame(myReq);
                     }
 
                     const currentDistance = courseDistance * animationPhase;
                     setDistance(currentDistance);
                     const index = courseData.filter(pt => pt.distance < currentDistance).length;
                     
-                    popup.setHTML('Altitude: ' + courseData[index].elevation + 'm<br/>');
-                    marker.setLngLat(courseData[index].coordinates);
-
+                    if (index < courseData.length) {
+                        popup.setHTML('Altitude: ' + courseData[index].elevation + 'm<br/>');
+                        marker.setLngLat(courseData[index].coordinates);
+    
+                    }
+                    
                     map.setPaintProperty('line', 'line-gradient', [
                         'step',
                         ['line-progress'],
@@ -146,7 +150,9 @@ export const Map = () => {
     useEffect(() => {
         if (map && !animation) {
             const index = courseData.filter(pt => pt.distance < distance).length;
-            marker.setLngLat(courseData[index].coordinates);
+            if (index < courseData.length) {
+                marker.setLngLat(courseData[index]?.coordinates);
+            }
         }
     }, [map, animation, distance]);
 
