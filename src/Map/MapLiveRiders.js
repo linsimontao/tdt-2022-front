@@ -11,11 +11,21 @@ const initialMapState = {
     bearing: 0
 }
 
-const getGeojson = features => features.map((feature) => feature.geojson);
+const getGeojson = features => features.map(
+    feature => ({
+        ...feature.geojson,
+        'properties': {
+            'id': feature.id,
+            'updateTime': feature.updateTime,
+            'dis': feature.dis
+        }
+    })
+);
 
 export const Map = ({ courseLinestring, riders }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
+    const [activeRidersID, setActiveRidersID] = useState([]);
     const worker = new Worker('./ridersupdate.js');
 
     const addRiders = (map) => {
@@ -23,7 +33,6 @@ export const Map = ({ courseLinestring, riders }) => {
             if (error) throw error;
             map.addImage('ridericon', image, { pixelRatio: 5 });
         })
-        // data from opendata.cityofboise.org/
         map.addSource('riders', {
             'type': 'geojson',
             'data': {
@@ -101,6 +110,17 @@ export const Map = ({ courseLinestring, riders }) => {
                 });
 
                 addRiders(map);
+
+                map.on('moveend', () => {
+                    if (map.getZoom() < 13.0) {
+                        setActiveRidersID([]);
+                    } else {
+                        if (map.getLayer('riders')) {
+                            const activeRiders = map.queryRenderedFeatures({ layers: ['riders'] });
+                            setActiveRidersID(activeRiders.map(rider => rider.properties.id));
+                        }
+                    }
+                });
             });
             setMap(map);
             return () => map.remove();
@@ -108,37 +128,41 @@ export const Map = ({ courseLinestring, riders }) => {
     );
 
     useEffect(() => {
-        const postMes = (ridersArr, updateTime) => {
+        const postMes = (ridersArr) => {
             const data = {
                 ridersArr: ridersArr,
-                updateTime: updateTime
+                activeRidersIDArr: activeRidersID
             }
             worker.postMessage({ courseLinestring, data });
         }
         const runWorker = () => {
-            postMes(riders, new Date().getTime());
-            worker.onerror = err => err;
-            worker.onmessage = e => {
-                const { newRidersArr, updateTime } = e.data;
-                if (map && newRidersArr) {
-                    const ridersSource = map.getSource('riders');
-                    if (ridersSource) {
-                        ridersSource.setData({
-                            "type": "FeatureCollection",
-                            "features": getGeojson(newRidersArr)
-                        });
+            if (map.getLayer('riders')) {
+                postMes(riders);
+                worker.onerror = err => err;
+                worker.onmessage = e => {
+                    const { newRidersArr } = e.data;
+                    if (map && newRidersArr) {
+                        const ridersSource = map.getSource('riders');
+                        if (ridersSource) {
+                            ridersSource.setData({
+                                "type": "FeatureCollection",
+                                "features": getGeojson(newRidersArr)
+                            });
+                        }
                     }
-                }
-                postMes(newRidersArr, updateTime);
-            };
+                    postMes(newRidersArr);
+                };
+            }
         };
 
-        if (riders) {
+        if (riders && activeRidersID.length > 0) {
             runWorker();
+        } else {
+            worker.terminate();
         }
 
-        return () => worker.terminate()
-    }, [map]);
+        return () => worker.terminate();
+    }, [map, activeRidersID]);
 
     return (
         <div ref={mapRef} className='map-live' />
