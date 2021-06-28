@@ -4,6 +4,9 @@ import { courseContext } from '../Course/Home';
 import { lineString, lineDistance, along } from '@turf/turf';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const initialMapState = {
     lng: 141.395,
