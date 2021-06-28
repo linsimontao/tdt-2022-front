@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import { courseContext } from './Home';
 import {
     scaleLinear,
     axisBottom,
@@ -29,18 +28,16 @@ const useResizeObserver = ref => {
     return dimension;
 }
 
-export const Chart = () => {
+export const Chart = ({ courseData, setDistance }) => {
     const svgRef = useRef();
     const divRef = useRef();
     const brushRef = useRef();
 
     const dimension = useResizeObserver(divRef);
 
-    const { courseData, distance, setDistance, animation, setAnimation } = useContext(courseContext)
     const courseLineString = lineString(courseData.map(d => d.coordinates));
     const courseDistance = lineDistance(courseLineString);
 
-    //useCallback?
     const findIdx = dis => courseData.filter(pt => pt.distance <= dis).length;
 
     useEffect(() => {
@@ -76,13 +73,13 @@ export const Chart = () => {
             .selectAll(".link")
             .data([courseData.map(d => d.elevation)])
             .join("path")
-            .attr("class", "link")
+            .attr("className", "link")
             .attr("d", lineGenerator)
             .attr("fill", "none")
             .attr("stroke", "blue");
         
         svg.on('mousemove', (evt) => {
-            if (!animation && evt.offsetX >= 0) {
+            if (evt.offsetX >= 0) {
                 const dis = xScale.invert(evt.offsetX);
                 setDistance(dis);
                 const index = findIdx(dis);
@@ -98,22 +95,7 @@ export const Chart = () => {
                     .attr("fill", "red");
             }
         })
-
-        if (animation) {
-            const idx = findIdx(distance);
-            const pt = courseData[idx];
-            content
-                    .selectAll(".dot")
-                    .data([pt])
-                    .join("circle")
-                    .attr("class", "dot")
-                    .attr("cx", xScale(pt.distance))
-                    .attr("cy", yScale(pt.elevation))
-                    .attr("r", 3)
-                    .attr("fill", "red");
-        }
-
-    }, [dimension, animation, distance])
+    }, [dimension])
 
     return (
         <div className="chartContainer" ref={divRef}>

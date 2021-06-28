@@ -1,29 +1,33 @@
-import Navbar from './NavBar';
-import Home from './Course/Home';
-import About from './About/About';
-import Riders from './Riders/Riders';
-
+import React, { createContext, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch
-} from 'react-router-dom'
+} from 'react-router-dom';
+import { SideBar } from './SideBar/SideBar';
+import { Home } from './Pages/Home/Home';
+import { Terrain } from './Pages/Terrain/Terrain';
+import { Info } from './Pages/Info/Info';
+import { Riders } from './Pages/Riders/Riders';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <SideBar />
         <div className="content">
           <Switch>
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/live">
+            <Route exact path="/riders">
               <Riders />
             </Route>
-            <Route exact path="/about">
-              <About />
+            <Route exact path="/terrain">
+              <Terrain />
+            </Route>
+            <Route exact path="/info">
+              <Info />
             </Route>
           </Switch>
         </div>

@@ -87,30 +87,30 @@ export const Map = ({ courseLinestring, riders }) => {
                     }
                 });
 
-                map.addSource('line', {
-                    type: 'geojson',
-                    lineMetrics: true,
-                    data: {
-                        "type": "FeatureCollection",
-                        "features": [
-                            courseLinestring
-                        ]
-                    }
-                });
+                // map.addSource('line', {
+                //     type: 'geojson',
+                //     lineMetrics: true,
+                //     data: {
+                //         "type": "FeatureCollection",
+                //         "features": [
+                //             courseLinestring
+                //         ]
+                //     }
+                // });
 
-                map.addLayer({
-                    type: 'line',
-                    source: 'line',
-                    id: 'line',
-                    paint: {
-                        'line-color': 'rgba(255,0,0,1)',
-                        'line-width': 5
-                    },
-                    layout: {
-                        'line-cap': 'round',
-                        'line-join': 'round'
-                    }
-                });
+                // map.addLayer({
+                //     type: 'line',
+                //     source: 'line',
+                //     id: 'line',
+                //     paint: {
+                //         'line-color': 'rgba(255,0,0,1)',
+                //         'line-width': 5
+                //     },
+                //     layout: {
+                //         'line-cap': 'round',
+                //         'line-join': 'round'
+                //     }
+                // });
 
                 addRiders(map);
 
