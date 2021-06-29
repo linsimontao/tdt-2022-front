@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { OhenIcon } from '../../SideBar/CustomSVG';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 // @ts-ignore
@@ -58,6 +59,11 @@ export const Map = () => {
         }, []
     );
     return (
-        <div ref={mapRef} className='map-course' />
-    );
+        <>
+            <div ref={mapRef} className='map-course' />
+            <div className="ohen-button">
+                <OhenIcon />
+            </div>
+        </>
+                );
 }

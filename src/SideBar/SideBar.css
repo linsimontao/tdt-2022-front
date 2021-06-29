@@ -1,5 +1,5 @@
 .sidebar {
-    background-color: yellowgreen;
+    background-color: #9CC82E;
     width: 60px;
     height: 100vh;
     margin-top: 71px;
@@ -18,7 +18,7 @@
     color: white;
     font-weight: bold;
     justify-content: center;
-}
+}      
 
 .sidebar-icon-item p {
     padding-top: 5px;

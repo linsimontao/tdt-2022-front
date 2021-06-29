@@ -1,0 +1,20 @@
+
+.a {
+    fill:#9cc82e;
+}
+
+.b{
+    fill:#fff;
+    font-size:17px;
+    font-family:HiraginoSans-W6, Hiragino Sans;
+}
+
+.c{
+    font-family:NotoSans-Bold, Noto Sans;
+    font-weight:700;
+}
+
+.d{
+    filter:url(#a);
+}
+     
