@@ -10,3 +10,8 @@
     bottom: 100px;
     right: 90px;
 }
+
+.mapboxgl-ctrl-top-right {
+    top: 0px;
+    right: 60px;
+}

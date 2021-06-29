@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { ZoomControl } from 'mapbox-gl-controls';
 import { OhenIcon } from '../../SideBar/CustomSVG';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
@@ -50,6 +51,7 @@ export const Map = () => {
                         'sky-atmosphere-sun-intensity': 15
                     }
                 });
+                map.addControl(new ZoomControl(), 'top-right')
                 setMap(map);
             });
 

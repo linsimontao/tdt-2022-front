@@ -75,7 +75,7 @@ export const Chart = ({ courseData, setDistance }) => {
             .join("path")
             .attr("className", "link")
             .attr("d", lineGenerator)
-            .attr("fill", "none")
+            .attr("fill", "blue")
             .attr("stroke", "blue");
         
         svg.on('mousemove', (evt) => {
