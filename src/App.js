@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import { TitleBar } from './TitleBar/TitleBar';
 import { SideBar } from './SideBar/SideBar';
 import { Home } from './Pages/Home/Home';
 import { Terrain } from './Pages/Terrain/Terrain';
@@ -14,6 +15,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <TitleBar />
         <SideBar />
         <div className="content">
           <Switch>
