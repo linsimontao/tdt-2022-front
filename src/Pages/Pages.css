@@ -20,7 +20,7 @@
 
 .subpage-active {
     position: relative;
-    width: 281px;
+    width: 301px;
     height: 100%;
     left: 0;
     background-color: white;
@@ -55,4 +55,14 @@
     height: 100%;
     background-color: #F7F7F7;
     border: 0px;
+}
+
+.subpage-body {
+    display: flex;
+    justify-content: center;
+}
+.subpage-buttons {
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 27px;
 }

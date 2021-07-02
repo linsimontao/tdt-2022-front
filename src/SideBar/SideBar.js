@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { InfoIcon, CameraIcon, RiderIcon, MapIcon, TerrainIcon } from "./CustomSVG";
+import { InfoIcon, CameraIcon, RiderIcon, MapIcon, TerrainIcon } from "../Pages/Common/CustomSVG";
 import './SideBar.css';
 const data = [
     {

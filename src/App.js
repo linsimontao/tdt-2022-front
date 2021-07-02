@@ -20,13 +20,16 @@ function App() {
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Home sub="home"/>
             </Route>
             <Route exact path="/riders">
               <Riders />
             </Route>
             <Route exact path="/terrain">
               <Terrain />
+            </Route>
+            <Route exact path="/live">
+              <Home sub="live"/>
             </Route>
             <Route exact path="/info">
               <Info />

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { ZoomControl } from 'mapbox-gl-controls';
-import { OhenIcon } from '../../SideBar/CustomSVG';
+import { OhenIcon } from '../Common/CustomSVG';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 // @ts-ignore
