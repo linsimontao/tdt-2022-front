@@ -30,7 +30,7 @@
 .subpage-terrain-active {
     position: relative;
     width: 281px;
-    height: calc(100% - 200px);
+    height: calc(100% - 255px);
     left: 0;
     background-color: white;
     transition: 700ms;
@@ -58,11 +58,50 @@
 }
 
 .subpage-body {
-    display: flex;
     justify-content: center;
 }
+
 .subpage-buttons {
     display: inline-flex;
     justify-content: center;
     margin-top: 27px;
+    margin-left: 36px;
+}
+
+.poi-list {
+    margin-top: 22px;
+}
+
+.poi-list ul {
+    list-style-type: none;
+}
+
+.poi-location {
+    display: flex;
+    align-items: center;
+}
+
+.poi-location .poi-text-main {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.poi-list .vl {
+    border-left: 1px solid #cccccc;
+    height: 50px;
+    margin-left: 8px;
+}
+
+.poi-location .circle-active {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background: #E62270;
+}
+
+.poi-location .circle-inactive {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background: #cccdcc;
 }

@@ -7,8 +7,6 @@ import {
 import { TitleBar } from './TitleBar/TitleBar';
 import { SideBar } from './SideBar/SideBar';
 import { Home } from './Pages/Home/Home';
-import { Terrain } from './Pages/Terrain/Terrain';
-import { Info } from './Pages/Info/Info';
 import { Riders } from './Pages/Riders/Riders';
 
 function App() {
@@ -26,13 +24,13 @@ function App() {
               <Riders />
             </Route>
             <Route exact path="/terrain">
-              <Terrain />
+              <Home sub="terrain" />
             </Route>
             <Route exact path="/live">
               <Home sub="live"/>
             </Route>
             <Route exact path="/info">
-              <Info />
+              <Home sub="info" />
             </Route>
           </Switch>
         </div>

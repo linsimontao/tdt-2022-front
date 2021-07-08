@@ -64,7 +64,7 @@ export const OhenIcon = () => (
             <filter id="a" x="0" y="0" width="158.203" height="158.203" filterUnits="userSpaceOnUse">
                 <feOffset dy="3" input="SourceAlpha" />
                 <feGaussianBlur stdDeviation="3" result="b" />
-                <feFlood flood-opacity="0.251" />
+                <feFlood floodOpacity="0.251" />
                 <feComposite operator="in" in2="b" />
                 <feComposite in="SourceGraphic" />
             </filter>

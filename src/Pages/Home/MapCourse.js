@@ -2,6 +2,8 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { ZoomControl } from 'mapbox-gl-controls';
 import { OhenIcon } from '../Common/CustomSVG';
+import { lineString } from '@turf/turf';
+
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 // @ts-ignore
@@ -16,21 +18,33 @@ const initialMapState = {
     bearing: 0
 }
 
-export const Map = () => {
+const marker = new mapboxgl.Marker({
+    color: 'red',
+    scale: 0.8,
+    draggable: false,
+    pitchAlignment: 'auto',
+    rotationAlignment: 'auto'
+});
+const popup = new mapboxgl.Popup({ closeButton: false });
+
+export const Map = ({ sub, activeCourseId, courseData, distance }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState();
+    const [displayMarker, setDisplayMarker] = useState(false);
+    const courseLinestring = lineString(
+        courseData?.features.map(d => d.geometry.coordinates)
+    );
 
     useEffect(
         () => {
             const map = new mapboxgl.Map({
                 container: mapRef.current,
-                style: 'mapbox://styles/demo-sa-jp/cknyf2c0l0dmz17pm4ejbde6t',
+                style: 'mapbox://styles/demo-sa-jp/ckqtbxxwz5wna17qzzymbdkqe',
                 center: [initialMapState.lng, initialMapState.lat],
                 zoom: initialMapState.zoom,
                 pitch: initialMapState.pitch,
                 bearing: initialMapState.bearing
             });
-
             map.on('load', () => {
                 map.addSource('mapbox-dem', {
                     'type': 'raster-dem',
@@ -51,7 +65,8 @@ export const Map = () => {
                         'sky-atmosphere-sun-intensity': 15
                     }
                 });
-                map.addControl(new ZoomControl(), 'top-right')
+
+                map.addControl(new ZoomControl(), 'top-right');
                 setMap(map);
             });
 
@@ -60,12 +75,46 @@ export const Map = () => {
             }
         }, []
     );
+
+    useEffect(() => {
+        if (map && sub === 'terrain') {
+            const index = courseData.features.filter(pt => pt.properties.dis < distance).length;
+            if (!displayMarker) {
+                marker.setLngLat(courseData.features[0].geometry.coordinates)
+                    .setPopup(popup)
+                    .addTo(map)
+                    .togglePopup();
+                setDisplayMarker(true);
+            }
+            if (index < courseData.features.length) {
+                marker.setLngLat(courseData.features[index]?.geometry.coordinates);
+                popup.setHTML(courseData.features[index]?.properties.ele + 'm');
+            }
+        }
+        if (sub !== 'terrain') {
+            if (displayMarker) {
+                marker.remove();
+                setDisplayMarker(false);
+            }
+        }
+    }, [map, sub, distance]);
+
+    useEffect(() => {
+        if (activeCourseId === 0) {
+            map?.setLayoutProperty('tracks-65', 'visibility', 'visible');
+            map?.setLayoutProperty('tracks-100', 'visibility', 'none');
+        } else {
+            map?.setLayoutProperty('tracks-65', 'visibility', 'none');
+            map?.setLayoutProperty('tracks-100', 'visibility', 'visible');
+        }
+    }, [activeCourseId]);
+
     return (
         <>
-            <div ref={mapRef} className='map-course' />
+            <div ref={mapRef} className="map-course" />
             <div className="ohen-button">
                 <OhenIcon />
             </div>
         </>
-                );
+    );
 }

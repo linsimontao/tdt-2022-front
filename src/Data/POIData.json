@@ -1,0 +1,89 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "最高標高地点",
+                "cat": "Sight"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.44047,
+                    38.52267
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "女川AS（女川町海岸広場）",
+                "cat": "AS"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.448,
+                    38.442
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "雄勝AS（旧雄勝中学校跡地）",
+                "cat": "AS"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.322731342229,
+                    38.5211497340288
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "スタート/ゴール",
+                "cat": "Sight"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.30531,
+                    38.45812
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "最高上り勾配地点",
+                "cat": "Sight"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.48828506469727,
+                    38.49088341992146
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "なみいた大橋",
+                "cat": "Sight"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.49208307266235,
+                    38.48506369163184
+                ]
+            }
+        }
+    ]
+}

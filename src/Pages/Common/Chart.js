@@ -35,10 +35,10 @@ export const Chart = ({ courseData, setDistance }) => {
 
     const dimension = useResizeObserver(divRef);
 
-    const courseLineString = lineString(courseData.map(d => d.coordinates));
+    const courseLineString = lineString(courseData.features.map(d => d.geometry.coordinates));
     const courseDistance = lineDistance(courseLineString);
 
-    const findIdx = dis => courseData.filter(pt => pt.distance <= dis).length;
+    const findIdx = dis => courseData.features.filter(pt => pt.properties.dis <= dis).length;
 
     useEffect(() => {
         const svg = select(svgRef.current);
@@ -49,11 +49,10 @@ export const Chart = ({ courseData, setDistance }) => {
             .range([0, width]);
         const xAxis = axisBottom(xScale);
         const yScale = scaleLinear()
-            .domain([min(courseData.map(d => d.elevation)), max(courseData.map(d => d.elevation))])
+            .domain([min(courseData.features.map(d => d.properties.ele)), max(courseData.features.map(d => d.properties.ele))])
             .range([height, 0]);
         const yAxis = axisLeft(yScale);
 
-        //svg.selectAll
         svg
             .select(".x-axis")
             .style("transform", `translateY(${height}px)`)
@@ -63,15 +62,16 @@ export const Chart = ({ courseData, setDistance }) => {
             .call(yAxis)
 
         const lineGenerator = line()
-            .x((d, i) => xScale(courseData[i].distance))
+            .x((d, i) => xScale(courseData.features[i].properties.dis))
             .y(yScale)
             .curve(curveCardinal);
 
-        const content = svg.select(".content");
+        const content = svg.select(".chart-content");
+        content.selectAll("*").remove();
 
         content
             .selectAll(".link")
-            .data([courseData.map(d => d.elevation)])
+            .data([courseData.features.map(d => d.properties.ele)])
             .join("path")
             .attr("className", "link")
             .attr("d", lineGenerator)
@@ -83,27 +83,27 @@ export const Chart = ({ courseData, setDistance }) => {
                 const dis = xScale.invert(evt.offsetX);
                 setDistance(dis);
                 const index = findIdx(dis);
-                const pt = courseData[index];
+                const pt = courseData.features[index];
                 content
                     .selectAll(".dot")
                     .data([pt])
                     .join("circle")
                     .attr("class", "dot")
-                    .attr("cx", xScale(pt.distance))
-                    .attr("cy", yScale(pt.elevation))
+                    .attr("cx", xScale(pt.properties.dis))
+                    .attr("cy", yScale(pt.properties.ele))
                     .attr("r", 3)
                     .attr("fill", "red");
             }
         })
-    }, [dimension])
+    }, [dimension, courseData])
 
     return (
         <div className="chartContainer" ref={divRef}>
             <svg ref={svgRef}>
-                <g className="content"></g>
+                <g className="chart-content"></g>
                 <g className="x-axis"></g>
                 <g className="y-axis"></g>
-                <g ref={brushRef} />
+                {/* <g ref={brushRef} /> */}
             </svg>
         </div>
     );
