@@ -3,6 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import { ZoomControl } from 'mapbox-gl-controls';
 import { OhenIcon } from '../Common/CustomSVG';
 import { lineString } from '@turf/turf';
+import POIData from '../../Data/POIData.json';
 
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
@@ -27,7 +28,7 @@ const marker = new mapboxgl.Marker({
 });
 const popup = new mapboxgl.Popup({ closeButton: false });
 
-export const Map = ({ sub, activeCourseId, courseData, distance, activeIdx }) => {
+export const Map = ({ sub, activeCourseId, courseData, distance, activePID, setActivePID }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState();
     const [displayMarker, setDisplayMarker] = useState(false);
@@ -108,11 +109,36 @@ export const Map = ({ sub, activeCourseId, courseData, distance, activeIdx }) =>
             map?.setLayoutProperty('tracks-65', 'visibility', 'none');
             map?.setLayoutProperty('tracks-100', 'visibility', 'visible');
         }
+        setActivePID(10);
     }, [activeCourseId]);
 
     useEffect(() => {
-        console.log(activeIdx);
-    }, [activeIdx]);
+        if (map && sub == 'home') {
+            if (activePID === 10) {
+                map?.flyTo({
+                    center: [initialMapState.lng, initialMapState.lat],
+                    zoom: initialMapState.zoom,
+                    pitch: initialMapState.pitch,
+                    bearing: initialMapState.bearing
+                });
+                return;
+            }
+
+            const data = POIData.features.filter(poi => poi.properties.PID === activePID);
+            map.flyTo({
+                center: data[0]?.geometry.coordinates,
+                zoom: 15,
+                bearing: 0,
+                speed: 0.5, // make the flying slow
+                curve: 1, // change the speed at which it zooms out
+                // easing: function (t) {
+                //     return t;
+                // },
+                essential: true
+            });
+        }
+
+    }, [activePID]);
 
     return (
         <>

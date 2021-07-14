@@ -17,12 +17,12 @@ export const Home = ({ sub }) => {
     const [subInfoPageActive, setSubInfoPageActive] = useState(true);
     const [subTerrainPageActive, setSubTerrainPageActive] = useState(true);
     const [distance, setDistance] = useState(0);
-    const [activeIdx, setActiveIdx] = useState(0);
+    const [activePID, setActivePID] = useState(10);
     
     const showSubPanel = () => {
         switch (sub) {
             case 'home':
-                return <SubHome subPageActive={subHomePageActive} setSubPageActive={setSubHomePageActive} activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activeIdx={activeIdx} setActiveIdx={setActiveIdx} />;
+                return <SubHome subPageActive={subHomePageActive} setSubPageActive={setSubHomePageActive} activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activePID={activePID} setActivePID={setActivePID} />;
             case 'live':
                 return <SubLive subPageActive={subLivePageActive} setSubPageActive={setSubLivePageActive} />;
             case 'info':
@@ -35,7 +35,7 @@ export const Home = ({ sub }) => {
     return (
         <div className="page">
             <div className="mainpage">
-                <Map sub={sub} activeCourseId={activeCourseId} courseData={activeCourseId === 0? course65: course100} distance={distance} activeIdx={activeIdx} setActiveIdx={setActiveIdx} />
+                <Map sub={sub} activeCourseId={activeCourseId} courseData={activeCourseId === 0? course65: course100} distance={distance} activePID={activePID} setActivePID={setActivePID} />
                 { sub === 'terrain' ?
                     <Chart courseData={activeCourseId === 0? course65: course100} setDistance={setDistance} />:
                     <></>

@@ -4,20 +4,20 @@ import { ImageButton } from '../Common/ImageButton';
 import { POIList } from '../Common/POIList';
 import POIData from '../../Data/POIData.json';
 
-export const SubHome = ({ subPageActive, setSubPageActive, activeCourseId, setActiveCourseId, activeIdx, setActiveIdx }) => {
+export const SubHome = ({ subPageActive, setSubPageActive, activeCourseId, setActiveCourseId, activePID, setActivePID }) => {
     return (
         <div className={subPageActive ? "subpage-active" : "subpage"}>
             <SubPageTitle subPageTitle="MAP" subPageActive={subPageActive} setSubPageActive={setSubPageActive} />
             {
                 subPageActive ?
-                    <SubHomeBody activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activeIdx={activeIdx} setActiveIdx={setActiveIdx} /> :
+                    <SubHomeBody activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activePID={activePID} setActivePID={setActivePID} /> :
                     <></>
             }
         </div>
     );
 }
 
-const SubHomeBody = ({ activeCourseId, setActiveCourseId, activeIdx, setActiveIdx }) => {
+const SubHomeBody = ({ activeCourseId, setActiveCourseId, activePID, setActivePID }) => {
     const clickHandler = (id) => {
         if (id === activeCourseId) return;
         setActiveCourseId(id);
@@ -28,7 +28,7 @@ const SubHomeBody = ({ activeCourseId, setActiveCourseId, activeIdx, setActiveId
                 <ImageButton icon="MAP" text="65KM" active={activeCourseId === 0} onClick={() => clickHandler(0)} />
                 <ImageButton icon="MAP" text="100KM" active={activeCourseId === 1} onClick={() => clickHandler(1)}/>
             </div>
-            <POIList data={POIData?.features} activeCourseId={activeCourseId} activeIdx={activeIdx} setActiveIdx={setActiveIdx} />
+            <POIList data={POIData?.features} activeCourseId={activeCourseId} activePID={activePID} setActivePID={setActivePID} />
         </div>
     );
 };

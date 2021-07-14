@@ -1,4 +1,4 @@
-export const POIList = ({ data, activeCourseId, activeIdx, setActiveIdx }) => {
+export const POIList = ({ data, activeCourseId, activePID, setActivePID }) => {
     const courseName = ["065km", "100km"];
     data = data.filter(poi => poi.properties[courseName[activeCourseId]] == "1");
     return (
@@ -7,9 +7,9 @@ export const POIList = ({ data, activeCourseId, activeIdx, setActiveIdx }) => {
                 {
                     data.map((poi, i) => (
                         <li key={`poi-${i}`}>
-                            <div className="poi-location" onClick={() => setActiveIdx(i)}>
+                            <div className="poi-location" onClick={() => setActivePID(poi.properties.PID)}>
                                 {
-                                    (i === activeIdx)?
+                                    (poi.properties.PID === activePID)?
                                     <div className="circle-active" />:
                                     <div className="circle-inactive" />
                                 }
@@ -20,7 +20,6 @@ export const POIList = ({ data, activeCourseId, activeIdx, setActiveIdx }) => {
                                     <div className="vl"></div> :
                                     <></>
                             }
-
                         </li>
                     ))
                 }
