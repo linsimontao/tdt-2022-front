@@ -27,7 +27,7 @@ const marker = new mapboxgl.Marker({
 });
 const popup = new mapboxgl.Popup({ closeButton: false });
 
-export const Map = ({ sub, activeCourseId, courseData, distance }) => {
+export const Map = ({ sub, activeCourseId, courseData, distance, activeIdx }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState();
     const [displayMarker, setDisplayMarker] = useState(false);
@@ -109,6 +109,10 @@ export const Map = ({ sub, activeCourseId, courseData, distance }) => {
             map?.setLayoutProperty('tracks-100', 'visibility', 'visible');
         }
     }, [activeCourseId]);
+
+    useEffect(() => {
+        console.log(activeIdx);
+    }, [activeIdx]);
 
     return (
         <>
