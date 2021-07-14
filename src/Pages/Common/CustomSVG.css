@@ -1,20 +1,30 @@
-
 .a {
-    fill:#9cc82e;
+    fill: #9cc82e;
 }
 
-.b{
-    fill:#fff;
-    font-size:17px;
-    font-family:HiraginoSans-W6, Hiragino Sans;
+.b {
+    fill: #fff;
+    font-size: 17px;
+    font-family: HiraginoSans-W6, Hiragino Sans;
 }
 
-.c{
-    font-family:NotoSans-Bold, Noto Sans;
-    font-weight:700;
+.c {
+    font-family: NotoSans-Bold, Noto Sans;
+    font-weight: 700;
 }
 
-.d{
-    filter:url(#a);
+.d {
+    filter: url(#a);
 }
-     
+
+.aa {
+    fill: #000003;
+}
+
+.bb {
+    fill: #8cb808;
+}
+
+.cc {
+    fill: #070203;
+}

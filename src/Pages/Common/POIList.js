@@ -1,4 +1,8 @@
-export const POIList = ({ data, activeIdx = 0 }) => {
+export const POIList = ({ data, activeCourseId, activeIdx = 0 }) => {
+    const courseName = ["065km", "100km"];
+    data = data.filter(poi => poi.properties[courseName[activeCourseId]] == "1");
+    console.log(data);
+
     return (
         <div className="poi-list">
             <ul>

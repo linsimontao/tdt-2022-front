@@ -2,25 +2,26 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { InfoIcon, CameraIcon, RiderIcon, MapIcon, TerrainIcon } from "../Pages/Common/CustomSVG";
 import './SideBar.css';
+    
 const data = [
     {
         title: 'MAP',
-        path: '/',
+        path: `${process.env.PUBLIC_URL}/`,
         icon: <MapIcon />
     },
     {
         title: 'RIDER',
-        path: '/riders',
+        path: `${process.env.PUBLIC_URL}/riders`,
         icon: <RiderIcon />
     },
     {
         title: 'TERRAIN',
-        path: '/terrain',
+        path: `${process.env.PUBLIC_URL}/terrain`,
         icon: <TerrainIcon />
     },
     {
         title: 'LIVE',
-        path: '/live',
+        path: `${process.env.PUBLIC_URL}/live`,
         icon: <CameraIcon />
     },
     {

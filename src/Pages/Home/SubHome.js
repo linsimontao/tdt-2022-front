@@ -29,7 +29,7 @@ const SubHomeBody = ({ activeCourseId, setActiveCourseId }) => {
                 <ImageButton icon="MAP" text="100KM" active={activeCourseId === 1} onClick={() => clickHandler(1)}/>
             </div>
 
-            <POIList data={POIData?.features} />
+            <POIList data={POIData?.features} activeCourseId={activeCourseId} />
 
         </div>
     );

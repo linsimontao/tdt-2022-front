@@ -21,16 +21,7 @@
 .subpage-active {
     position: relative;
     width: 301px;
-    height: 100%;
-    left: 0;
-    background-color: white;
-    transition: 700ms;
-}
-
-.subpage-terrain-active {
-    position: relative;
-    width: 281px;
-    height: calc(100% - 255px);
+    height: 95%;
     left: 0;
     background-color: white;
     transition: 700ms;
@@ -59,6 +50,7 @@
 
 .subpage-body {
     justify-content: center;
+    height: 90%;
 }
 
 .subpage-buttons {
@@ -70,10 +62,13 @@
 
 .poi-list {
     margin-top: 22px;
+    overflow-y: scroll;
+    height: 90%;
 }
 
 .poi-list ul {
     list-style-type: none;
+    padding-bottom: 10px;
 }
 
 .poi-location {

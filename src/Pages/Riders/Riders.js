@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { lineString } from '@turf/turf';
-import { useCourseData } from '../../Data/useCourseData';
+import course65 from '../../Data/Course65.json';
+import course100 from '../../Data/Course100.json';
 import { RidersData } from '../../Data/RidersData';
 import { Map } from './MapLiveRiders';
 import { SubRiders } from './SubRiders';
@@ -8,13 +9,8 @@ import './RidersMap.css';
 
 export const Riders = () => {
     const [subPageActive, setSubPageActive] = useState(true);
-    const course = useCourseData();
-    if (!course) {
-        return <p>Loading</p>;
-    }
-
     const courseLinestring = lineString(
-        course.map(d => d.coordinates)
+        course65.features.map(d => d.geometry.coordinates)
     );
     const riders = RidersData(courseLinestring);
     if (!riders) {

@@ -93,6 +93,7 @@ export const Map = ({ sub, activeCourseId, courseData, distance }) => {
         }
         if (sub !== 'terrain') {
             if (displayMarker) {
+                marker.togglePopup();
                 marker.remove();
                 setDisplayMarker(false);
             }

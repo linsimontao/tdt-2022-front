@@ -46,11 +46,11 @@ export const Chart = ({ courseData, setDistance }) => {
         const { width, height } = dimension;
         const xScale = scaleLinear()
             .domain([0, courseDistance])
-            .range([0, width]);
+            .range([0, width-50]);
         const xAxis = axisBottom(xScale);
         const yScale = scaleLinear()
             .domain([min(courseData.features.map(d => d.properties.ele)), max(courseData.features.map(d => d.properties.ele))])
-            .range([height, 0]);
+            .range([height-10, 0]);
         const yAxis = axisLeft(yScale);
 
         svg

@@ -7,6 +7,7 @@ import {
 import { TitleBar } from './TitleBar/TitleBar';
 import { SideBar } from './SideBar/SideBar';
 import { Home } from './Pages/Home/Home';
+
 import { Riders } from './Pages/Riders/Riders';
 
 function App() {
