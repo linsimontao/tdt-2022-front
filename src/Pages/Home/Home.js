@@ -13,6 +13,7 @@ import '../Pages.css';
 export const Home = ({ sub }) => {
     const [subHomePageActive, setSubHomePageActive] = useState(true);
     const [activeCourseId, setActiveCourseId] = useState(0);
+    const [liveType, setLiveType] = useState('video');
     const [subLivePageActive, setSubLivePageActive] = useState(true);
     const [subInfoPageActive, setSubInfoPageActive] = useState(true);
     const [subTerrainPageActive, setSubTerrainPageActive] = useState(true);
@@ -24,7 +25,7 @@ export const Home = ({ sub }) => {
             case 'home':
                 return <SubHome subPageActive={subHomePageActive} setSubPageActive={setSubHomePageActive} activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activePID={activePID} setActivePID={setActivePID} />;
             case 'live':
-                return <SubLive subPageActive={subLivePageActive} setSubPageActive={setSubLivePageActive} />;
+                return <SubLive subPageActive={subLivePageActive} setSubPageActive={setSubLivePageActive} liveType={liveType} setLiveType={setLiveType}/>
             case 'info':
                 return <SubInfo subPageActive={subInfoPageActive} setSubPageActive={setSubInfoPageActive} />;
             case 'terrain':

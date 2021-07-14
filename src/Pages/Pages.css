@@ -100,3 +100,33 @@
     border-radius: 8px;
     background: #cccdcc;
 }
+
+.live-youtube-plauyer {
+    border-radius: 10px;
+}
+.live-videos {
+    margin-top: 30px;
+    display: inline-table;
+    justify-content: center;
+    margin-left: 36px;
+
+}
+
+.live-videos-label {
+    margin-top: 5px;
+    margin-bottom: -2px;
+    font-size: 16px;
+}
+
+.live-videos-label::before {
+    content: "★"; 
+    padding-right: 10px;
+   }
+   
+.live-videos-label-km {
+    margin-top: 5px;
+    margin-bottom: 24px;
+    margin-left: 28px;
+    font-size: 13px;
+    color: #666666;
+}

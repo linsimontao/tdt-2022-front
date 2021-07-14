@@ -12,7 +12,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const initialMapState = {
-    lng: 141.395,
+    lng: 141.36,
     lat: 38.487,
     zoom: 11.5,
     pitch: 60,
