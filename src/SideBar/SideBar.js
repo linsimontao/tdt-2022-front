@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { InfoIcon, CameraIcon, RiderIcon, MapIcon, TerrainIcon } from "../Pages/Common/CustomSVG";
-import './SideBar.css';
-    
+
 const data = [
     {
         title: 'MAP',
@@ -32,18 +31,25 @@ const data = [
 ];
 
 export const SideBar = () => {
+    const [menu, setMenu] = useState(false);
     return (
         <>
-            <nav className="sidebar">
+            <div className="hamburger" onClick={() => setMenu(!menu)}>
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+            </div>
+            <nav className={menu? "sidebar": "sidebar-none"}>
                 <div className="sidebar-icon-list">
                     {data.map((item, i) => {
                         return (
-                            <div className="sidebar-icon-item">
-                                <Link to={item.path}>
+                            <Link to={item.path}>
+                                <div className="sidebar-icon-item">
                                     {item.icon}
                                     <p>{item.title}</p>
-                                </Link>     
-                            </div>
+                                    <div className="sidebar-arrow">></div>
+                                </div>
+                            </Link>
                         );
                     })}
                 </div>
