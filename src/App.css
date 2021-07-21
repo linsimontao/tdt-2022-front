@@ -55,14 +55,7 @@
     text-decoration: none;
 }
 
-.sidebar-arrow {
-    display: none;
-}
-
 @media only screen and (max-width: 800px) {
-    .titlebar {
-        z-index: -1;
-    }
     .main-logo {
         margin-left: 86px;
     }

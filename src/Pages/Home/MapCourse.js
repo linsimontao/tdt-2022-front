@@ -4,7 +4,6 @@ import { ZoomControl } from 'mapbox-gl-controls';
 import { OhenIcon } from '../Common/CustomSVG';
 import { lineString } from '@turf/turf';
 
-
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved

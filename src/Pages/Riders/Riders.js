@@ -4,7 +4,6 @@ import course65 from '../../Data/Course65.json';
 import course100 from '../../Data/Course100.json';
 import { RidersData } from '../../Data/RidersData';
 import { Map } from './MapLiveRiders';
-import './RidersMap.css';
 
 export const Riders = () => {
     const courseLinestring = lineString(

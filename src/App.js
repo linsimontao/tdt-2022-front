@@ -1,4 +1,3 @@
-import React, { createContext, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -23,12 +22,6 @@ function App() {
             </Route>
             <Route exact path="/riders">
               <Riders />
-            </Route>
-            <Route exact path="/terrain">
-              <Home sub="terrain" />
-            </Route>
-            <Route exact path="/live">
-              <Home sub="live"/>
             </Route>
             <Route exact path="/info">
               <Home sub="info" />
