@@ -34,25 +34,69 @@ export const Map = ({ courseLinestring, riders }) => {
     const addRiders = (map) => {
         map.loadImage('./icon.png', (error, image) => {
             if (error) throw error;
-            map.addImage('ridericon', image, { pixelRatio: 5 });
+            map.addImage('ridericon-small', image, { pixelRatio: 5 });
+            map.addImage('ridericon-big', image, { pixelRatio: 3 });
         })
         map.addSource('riders', {
             'type': 'geojson',
             'data': {
                 "type": "FeatureCollection",
                 "features": getGeojson(riders)
-            }
+            },
+            cluster: true,
+            clusterMaxZoom: 13,
+            clusterRadius: 128
         });
+        
+        // map.addLayer({
+        //     id: 'clusters',
+        //     type: 'symbol',
+        //     source: 'riders',
+        //     filter: ['has', 'point_count'],
+        //     paint: {
+
+        //     }
+        // });
         map.addLayer({
-            'id': 'riders',
+            'id': 'riders-cluster',
             'type': 'symbol',
             'source': 'riders',
+            'filter': ['has', 'point_count'],
+            'minZoom': 13,
             'layout': {
-                'icon-image': 'ridericon',
+                'icon-image': 'ridericon-big',
                 'icon-offset': [0, -10],
                 'icon-allow-overlap': true
             }
         });
+        map.addLayer({
+            id: 'cluster-count',
+            type: 'symbol',
+            source: 'riders',
+            filter: ['has', 'point_count'],
+            paint: {
+            	'text-color': '#FFFFFF'
+            },
+            layout: {
+                'text-field': '{point_count_abbreviated}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 20
+            }
+        });
+
+        map.addLayer({
+            'id': 'riders',
+            'type': 'symbol',
+            'source': 'riders',
+            'filter': ['!', ['has', 'point_count']],
+            'layout': {
+                'icon-image': 'ridericon-small',
+                'icon-offset': [0, -10],
+                'icon-allow-overlap': true
+            }
+        });
+        
+
     }
 
     useEffect(
@@ -115,7 +159,7 @@ export const Map = ({ courseLinestring, riders }) => {
                 addRiders(map);
 
                 map.on('moveend', () => {
-                    if (map.getZoom() < 13.0) {
+                    if (map.getZoom() < 14.0) {
                         setActiveRidersID([]);
                     } else {
                         if (map.getLayer('riders')) {
