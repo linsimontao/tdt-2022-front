@@ -1,9 +1,8 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { ZoomControl } from 'mapbox-gl-controls';
 import { OhenIcon } from '../Common/CustomSVG';
 import { lineString } from '@turf/turf';
-import POIData from '../../Data/POIData.json';
 
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
@@ -28,7 +27,7 @@ const marker = new mapboxgl.Marker({
 });
 const popup = new mapboxgl.Popup({ closeButton: false });
 
-export const Map = ({ sub, activeCourseId, courseData, distance, activePID, setActivePID }) => {
+export const Map = ({ activeCourseId, courseData, distance, activePID, setActivePID }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState();
     const [displayMarker, setDisplayMarker] = useState(false);
@@ -77,29 +76,29 @@ export const Map = ({ sub, activeCourseId, courseData, distance, activePID, setA
         }, []
     );
 
-    useEffect(() => {
-        if (map && sub === 'terrain') {
-            const index = courseData.features.filter(pt => pt.properties.dis < distance).length;
-            if (!displayMarker) {
-                marker.setLngLat(courseData.features[0].geometry.coordinates)
-                    .setPopup(popup)
-                    .addTo(map)
-                    .togglePopup();
-                setDisplayMarker(true);
-            }
-            if (index < courseData.features.length) {
-                marker.setLngLat(courseData.features[index]?.geometry.coordinates);
-                popup.setHTML(courseData.features[index]?.properties.ele + 'm');
-            }
-        }
-        if (sub !== 'terrain') {
-            if (displayMarker) {
-                marker.togglePopup();
-                marker.remove();
-                setDisplayMarker(false);
-            }
-        }
-    }, [map, sub, distance]);
+    // useEffect(() => {
+    //     if (map) {
+    //         const index = courseData.features.filter(pt => pt.properties.dis < distance).length;
+    //         if (!displayMarker) {
+    //             marker.setLngLat(courseData.features[0].geometry.coordinates)
+    //                 .setPopup(popup)
+    //                 .addTo(map)
+    //                 .togglePopup();
+    //             setDisplayMarker(true);
+    //         }
+    //         if (index < courseData.features.length) {
+    //             marker.setLngLat(courseData.features[index]?.geometry.coordinates);
+    //             popup.setHTML(courseData.features[index]?.properties.ele + 'm');
+    //         }
+    //     }
+    //     if (sub !== 'terrain') {
+    //         if (displayMarker) {
+    //             marker.togglePopup();
+    //             marker.remove();
+    //             setDisplayMarker(false);
+    //         }
+    //     }
+    // }, [map, sub, distance]);
 
     useEffect(() => {
         if (activeCourseId === 0) {
@@ -111,34 +110,6 @@ export const Map = ({ sub, activeCourseId, courseData, distance, activePID, setA
         }
         setActivePID(10);
     }, [activeCourseId]);
-
-    useEffect(() => {
-        if (map && sub == 'home') {
-            if (activePID === 10) {
-                map?.flyTo({
-                    center: [initialMapState.lng, initialMapState.lat],
-                    zoom: initialMapState.zoom,
-                    pitch: initialMapState.pitch,
-                    bearing: initialMapState.bearing
-                });
-                return;
-            }
-
-            const data = POIData.features.filter(poi => poi.properties.PID === activePID);
-            map.flyTo({
-                center: data[0]?.geometry.coordinates,
-                zoom: 15,
-                bearing: 0,
-                speed: 0.5, // make the flying slow
-                curve: 1, // change the speed at which it zooms out
-                // easing: function (t) {
-                //     return t;
-                // },
-                essential: true
-            });
-        }
-
-    }, [activePID]);
 
     return (
         <>
