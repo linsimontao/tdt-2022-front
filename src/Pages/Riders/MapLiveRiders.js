@@ -25,7 +25,7 @@ const getGeojson = features => features.map(
     })
 );
 
-export const Map = ({ courseLinestring, riders }) => {
+export const MapRiders = ({ courseLinestring, riders }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
     const [activeRidersID, setActiveRidersID] = useState([]);

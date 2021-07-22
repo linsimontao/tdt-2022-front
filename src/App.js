@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -5,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { TitleBar } from './TitleBar/TitleBar';
 import { SideBar } from './SideBar/SideBar';
-import { Home } from './Pages/Home/Home';
+import { Map } from './Pages/Map/Map';
 import { Riders } from './Pages/Riders/Riders';
 import './App.css';
 
@@ -14,17 +15,17 @@ function App() {
     <Router>
       <div className="App">
         <TitleBar />
-        <SideBar />
+        <SideBar/>
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Home sub="home"/>
+              <Riders/>
             </Route>
-            <Route exact path="/riders">
-              <Riders />
+            <Route exact path="/map">
+              <Map/>
             </Route>
             <Route exact path="/info">
-              <Home sub="info" />
+              <Map/>
             </Route>
           </Switch>
         </div>

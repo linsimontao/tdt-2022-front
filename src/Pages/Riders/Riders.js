@@ -3,7 +3,9 @@ import { lineString } from '@turf/turf';
 import course65 from '../../Data/Course65.json';
 import course100 from '../../Data/Course100.json';
 import { RidersData } from '../../Data/RidersData';
-import { Map } from './MapLiveRiders';
+import { MapRiders } from './MapLiveRiders';
+import { Ohen } from '../Common/Ohen';
+import '../Pages.css';
 
 export const Riders = () => {
     const courseLinestring = lineString(
@@ -15,9 +17,9 @@ export const Riders = () => {
     }
     return (
         <div className="page">
-            <div className="mainpage">
-                <Map courseLinestring={courseLinestring} riders={riders} />
-            </div>
+            <MapRiders courseLinestring={courseLinestring} riders={riders} />
+            <Ohen />
         </div>
+
     );
 }

@@ -28,11 +28,10 @@ const useResizeObserver = ref => {
     return dimension;
 }
 
-export const Chart = ({ courseData, setDistance }) => {
+export const Chart = ({ courseData, setDistance, terrain, setTerrain }) => {
     const svgRef = useRef();
     const divRef = useRef();
-    const brushRef = useRef();
-
+    
     const dimension = useResizeObserver(divRef);
 
     const courseLineString = lineString(courseData.features.map(d => d.geometry.coordinates));
@@ -46,11 +45,12 @@ export const Chart = ({ courseData, setDistance }) => {
         const { width, height } = dimension;
         const xScale = scaleLinear()
             .domain([0, courseDistance])
-            .range([0, width-50]);
+            //.range([0, width-50]);
+            .range([0, width - 25]);
         const xAxis = axisBottom(xScale);
         const yScale = scaleLinear()
             .domain([min(courseData.features.map(d => d.properties.ele)), max(courseData.features.map(d => d.properties.ele))])
-            .range([height-10, 0]);
+            .range([height-10, 10]);
         const yAxis = axisLeft(yScale);
 
         svg
@@ -89,8 +89,8 @@ export const Chart = ({ courseData, setDistance }) => {
                     .data([pt])
                     .join("circle")
                     .attr("class", "dot")
-                    .attr("cx", xScale(pt.properties.dis))
-                    .attr("cy", yScale(pt.properties.ele))
+                    .attr("cx", xScale(pt?.properties.dis))
+                    .attr("cy", yScale(pt?.properties.ele))
                     .attr("r", 3)
                     .attr("fill", "red");
             }
@@ -98,13 +98,17 @@ export const Chart = ({ courseData, setDistance }) => {
     }, [dimension, courseData])
 
     return (
-        <div className="chartContainer" ref={divRef}>
+        <div className={terrain? "chart-container": "chart-container-hide"} ref={divRef}>
             <svg ref={svgRef}>
                 <g className="chart-content"></g>
                 <g className="x-axis"></g>
                 <g className="y-axis"></g>
-                {/* <g ref={brushRef} /> */}
             </svg>
+            <div className="chart-button" onClick={() => setTerrain(!terrain)}>
+                <p>
+                    TERRAIN
+                </p>
+            </div>
         </div>
     );
 }

@@ -2,3 +2,23 @@
     width: 100%;
     height: 100%;
 }
+
+.map-course {
+    width: 100%;
+    height: 100%;
+}
+
+.map-course-terrain {
+    width: 100%;
+    height: 100%;
+}
+
+.map-live {
+    width: 100%;
+    height: 100%;
+}
+
+.mapboxgl-ctrl-top-right {
+    top: 50%;
+    right: 10px;
+}

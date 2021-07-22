@@ -1,30 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap');
 .a {
-    fill: #9cc82e;
+    fill: #1a1311;
 }
 
 .b {
-    fill: #fff;
-    font-size: 17px;
-    font-family: HiraginoSans-W6, Hiragino Sans;
+    font-size: 11px;
+    font-family: CeraPro-Medium, Cera Pro;
+    font-weight: 600;
 }
 
 .c {
-    font-family: NotoSans-Bold, Noto Sans;
-    font-weight: 700;
-}
-
-.d {
-    filter: url(#a);
-}
-
-.aa {
-    fill: #000003;
-}
-
-.bb {
-    fill: #8cb808;
-}
-
-.cc {
-    fill: #070203;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Noto Sans JP, sans-serif;
+    letter-spacing: 0.05em;
 }
