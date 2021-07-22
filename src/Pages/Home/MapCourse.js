@@ -66,6 +66,11 @@ export const Map = ({ activeCourseId, courseData, distance, activePID, setActive
                 });
 
                 map.addControl(new ZoomControl(), 'top-right');
+
+                const popup_start = new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
+                    .setLngLat([141.30531, 38.45812])
+                    .setHTML('<h1>Hello World!</h1>')
+                    .addTo(map);
                 setMap(map);
             });
 
