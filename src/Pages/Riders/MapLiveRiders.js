@@ -185,7 +185,7 @@ export const MapRiders = ({ courseLinestring, riders }) => {
         const runWorker = () => {
             if (map.getLayer('riders')) {
                 postMes(riders);
-                worker.onerror = err => err;
+                worker.onerror = err => console.log(err.message);
                 worker.onmessage = e => {
                     const { newRidersArr } = e.data;
                     if (map && newRidersArr) {
