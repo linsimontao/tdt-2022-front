@@ -48,21 +48,12 @@ export const MapRiders = ({ courseLinestring, riders }) => {
             clusterRadius: 128
         });
         
-        // map.addLayer({
-        //     id: 'clusters',
-        //     type: 'symbol',
-        //     source: 'riders',
-        //     filter: ['has', 'point_count'],
-        //     paint: {
-
-        //     }
-        // });
         map.addLayer({
             'id': 'riders-cluster',
             'type': 'symbol',
             'source': 'riders',
             'filter': ['has', 'point_count'],
-            'minZoom': 13,
+            //'maxZoom': 13,
             'layout': {
                 'icon-image': 'ridericon-big',
                 'icon-offset': [0, -10],
@@ -73,6 +64,7 @@ export const MapRiders = ({ courseLinestring, riders }) => {
             id: 'cluster-count',
             type: 'symbol',
             source: 'riders',
+            //maxZoom: 13,
             filter: ['has', 'point_count'],
             paint: {
             	'text-color': '#FFFFFF'
@@ -85,18 +77,17 @@ export const MapRiders = ({ courseLinestring, riders }) => {
         });
 
         map.addLayer({
-            'id': 'riders',
-            'type': 'symbol',
-            'source': 'riders',
-            'filter': ['!', ['has', 'point_count']],
-            'layout': {
+            id: 'riders',
+            type: 'symbol',
+            source: 'riders',
+            //minZoom: 14,
+            filter: ['!', ['has', 'point_count']],
+            layout: {
                 'icon-image': 'ridericon-small',
                 'icon-offset': [0, -10],
                 'icon-allow-overlap': true
             }
         });
-        
-
     }
 
     useEffect(
@@ -131,32 +122,7 @@ export const MapRiders = ({ courseLinestring, riders }) => {
                     }
                 });
 
-                // map.addSource('line', {
-                //     type: 'geojson',
-                //     lineMetrics: true,
-                //     data: {
-                //         "type": "FeatureCollection",
-                //         "features": [
-                //             courseLinestring
-                //         ]
-                //     }
-                // });
-
-                // map.addLayer({
-                //     type: 'line',
-                //     source: 'line',
-                //     id: 'line',
-                //     paint: {
-                //         'line-color': 'rgba(255,0,0,1)',
-                //         'line-width': 5
-                //     },
-                //     layout: {
-                //         'line-cap': 'round',
-                //         'line-join': 'round'
-                //     }
-                // });
-
-                addRiders(map);
+               addRiders(map);
 
                 map.on('moveend', () => {
                     if (map.getZoom() < 14.0) {
