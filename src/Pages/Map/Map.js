@@ -5,6 +5,7 @@ import course65 from '../../Data/Course65.json';
 import course100 from '../../Data/Course100.json';
 import { Ohen } from '../Common/Ohen';
 import { SelectComponent } from '../Common/SelectComponent';
+import { MAP } from "../../constant/Constant";
 import './Terrain.css';
 
 const Course = [
@@ -21,11 +22,11 @@ const Course = [
 const Filter = [
     {
         value: 0,
-        name: '全部をみる'
+        name: 'コース＆LIVE中継'
     },
     {
         value: 1,
-        name: '全部をみる'
+        name: 'コースをみる'
     },
     {
         value: 2,
@@ -33,13 +34,16 @@ const Filter = [
     }
 ];
 
-export const Map = ({ sub }) => {
+export const Map = ({ active, setActive }) => {
+    if (setActive) {
+        setActive(MAP);
+    }
     const [activeCourseId, setActiveCourseId] = useState(0);
     const [distance, setDistance] = useState(0);
     const [terrain, setTerrain] = useState(true);
 
     const courseChangedHandler = (e) => {
-        setActiveCourseId(Course[e.target.selectedIndex])
+        setActiveCourseId(Course[e.target.selectedIndex].value)
     }
 
     const filterChangedHandler = (e) => {
@@ -50,7 +54,7 @@ export const Map = ({ sub }) => {
         <div className="page">
             <MapCourse activeCourseId={activeCourseId} courseData={activeCourseId === 0 ? course65 : course100} distance={distance} terrain={terrain} setTerrain={setTerrain} />
             <Chart courseData={activeCourseId === 0 ? course65 : course100} setDistance={setDistance} terrain={terrain} setTerrain={setTerrain} />
-            <Ohen />
+            <Ohen terrain={terrain} />
             <SelectComponent data={Course} type={"course"} onChangeHandler={courseChangedHandler} />
             <SelectComponent data={Filter} type={"filter"} onChangeHandler={filterChangedHandler} />
         </div>

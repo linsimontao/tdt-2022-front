@@ -1,7 +1,7 @@
 .select-course {
     position: absolute;
     top: 27px;
-    right: 30px;
+    right: 22px;
     height: 30px;
     width: 130px;
     border-radius: 15px;
@@ -10,8 +10,8 @@
 .select-filter {
     position: absolute;
     top: 27px;
-    right: 170px;
+    right: 162px;
     height: 30px;
-    width: 120px;
+    width: 130px;
     border-radius: 15px;
 }

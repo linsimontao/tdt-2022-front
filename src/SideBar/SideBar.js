@@ -26,8 +26,7 @@ const data = [
     }
 ];
 
-export const SideBar = () => {
-    const [active, setActive] = useState(RIDER);
+export const SideBar = ({active, setActive}) => {
     return (
         <>
             <nav className="sidebar">

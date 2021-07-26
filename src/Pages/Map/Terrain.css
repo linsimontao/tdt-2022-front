@@ -41,7 +41,7 @@
     transition: 500ms;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
     .chart-container {
         display: none;
     }
@@ -52,6 +52,41 @@
     .map {
         width: 100%;
         height: 100%;
+    }
+    .ohen-button-terrain,
+    .ohen-button {
+        position: relative;
+        bottom: 184px;
+        right: 39px;
+        width: 75px;
+        height: 67px;
+        margin-left: auto;
+        margin-top: auto;
+        transition: 500ms;
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .chart-container {
+        display: none;
+    }
+    .chart-container-hide {
+        display: none;
+    }
+    .map {
+        width: 100%;
+        height: 100%;
+    }
+    .ohen-button-terrain,
+    .ohen-button {
+        position: relative;
+        bottom: 84px;
+        right: 39px;
+        width: 75px;
+        height: 67px;
+        margin-left: auto;
+        margin-top: auto;
+        transition: 500ms;
     }
 }
 

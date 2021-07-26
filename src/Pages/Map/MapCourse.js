@@ -68,7 +68,7 @@ export const MapCourse = ({ activeCourseId, courseData, distance, terrain, setTe
 
                 const popup_start = new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
                     .setLngLat([141.30531, 38.45812])
-                    .setHTML('<h1>Hello World!</h1>')
+                    .setHTML('<h1>Hello!</h1>')
                     .addTo(map);
                 setMap(map);
             });
