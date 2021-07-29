@@ -1,0 +1,266 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "スタート",
+                "label_sub": "",
+                "PID": 10,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 1,
+                "map": 0,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.30531,
+                    38.45812
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "女川AS",
+                "label_sub": "女川町海岸広場",
+                "PID": 20,
+                "cat": "AS",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.448,
+                    38.442
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "ライブカメラ1",
+                "label_sub": "",
+                "PID": 25,
+                "cat": "Camera",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.48056030273435,
+                    38.4632670276956
+                ]
+            }
+        },
+        
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "なみいた大橋",
+                "label_sub": "",
+                "PID": 30,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.49208307266235,
+                    38.48506369163184
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "最高上り勾配地点",
+                "label_sub": "",
+                "PID": 40,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.48828506469727,
+                    38.49088341992146
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "最高標高地点",
+                "label_sub": "",
+                "PID": 50,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.43924355506897,
+                    38.52264429953626
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "新北上大橋",
+                "label_sub": "",
+                "PID": 60,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 0,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.42295,
+                    38.547184
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "神割崎AS",
+                "label_sub": "神割崎プラザ",
+                "PID": 70,
+                "cat": "AS",
+                "100km": 1,
+                "065km": 0,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.527574,
+                    38.63409
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "北上AS",
+                "label_sub": "白浜ビーチパーク",
+                "PID": 80,
+                "cat": "AS",
+                "100km": 1,
+                "065km": 0,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.476378,
+                    38.586749
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "ライブカメラ2",
+                "label_sub": "",
+                "PID": 85,
+                "cat": "Camera",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.3878631591797,
+                    38.53635012572907
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "雄勝AS",
+                "label_sub": "旧雄勝中学校跡地",
+                "PID": 90,
+                "cat": "AS",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.322731342229,
+                    38.5211497340288
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "ゴール",
+                "label_sub": "",
+                "PID": 100,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 1,
+                "map": 0,
+                "RouteProfile": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.30531,
+                    38.45812
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "label": "スタート/ゴール",
+                "label_sub": "",
+                "PID": 999,
+                "cat": "Sight",
+                "100km": 1,
+                "065km": 1,
+                "map": 1,
+                "RouteProfile": 0
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    141.30531,
+                    38.45812
+                ]
+            }
+        }
+    ]
+}

@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESSTOKEN;
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const initialMapState = {
     lng: 141.395,
@@ -22,30 +25,66 @@ const getGeojson = features => features.map(
     })
 );
 
-export const Map = ({ courseLinestring, riders }) => {
+export const MapRiders = ({ courseLinestring, riders }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
     const [activeRidersID, setActiveRidersID] = useState([]);
+    const [animation, setAnimation] = useState(false);
     const worker = new Worker('./ridersupdate.js');
 
     const addRiders = (map) => {
         map.loadImage('./icon.png', (error, image) => {
             if (error) throw error;
-            map.addImage('ridericon', image, { pixelRatio: 5 });
+            map.addImage('ridericon-small', image, { pixelRatio: 5 });
+            map.addImage('ridericon-big', image, { pixelRatio: 3 });
         })
         map.addSource('riders', {
             'type': 'geojson',
             'data': {
                 "type": "FeatureCollection",
                 "features": getGeojson(riders)
+            },
+            cluster: true,
+            clusterMaxZoom: 13,
+            clusterRadius: 128
+        });
+
+        map.addLayer({
+            'id': 'riders-cluster',
+            'type': 'symbol',
+            'source': 'riders',
+            'filter': ['has', 'point_count'],
+            //'maxZoom': 13,
+            'layout': {
+                'icon-image': 'ridericon-big',
+                'icon-offset': [0, -10],
+                'icon-allow-overlap': true
             }
         });
         map.addLayer({
-            'id': 'riders',
-            'type': 'symbol',
-            'source': 'riders',
-            'layout': {
-                'icon-image': 'ridericon',
+            id: 'cluster-count',
+            type: 'symbol',
+            source: 'riders',
+            //maxZoom: 13,
+            filter: ['has', 'point_count'],
+            paint: {
+                'text-color': '#FFFFFF'
+            },
+            layout: {
+                'text-field': '{point_count_abbreviated}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 20
+            }
+        });
+
+        map.addLayer({
+            id: 'riders',
+            type: 'symbol',
+            source: 'riders',
+            //minZoom: 14,
+            filter: ['!', ['has', 'point_count']],
+            layout: {
+                'icon-image': 'ridericon-small',
                 'icon-offset': [0, -10],
                 'icon-allow-overlap': true
             }
@@ -56,7 +95,8 @@ export const Map = ({ courseLinestring, riders }) => {
         () => {
             const map = new mapboxgl.Map({
                 container: mapRef.current,
-                style: 'mapbox://styles/demo-sa-jp/cknyf2c0l0dmz17pm4ejbde6t',
+                //style: 'mapbox://styles/demo-sa-jp/cknyf2c0l0dmz17pm4ejbde6t',
+                style: 'mapbox://styles/hidenoriyagi/ckpzg4tid2q6f17pe4d9da7im',
                 center: [initialMapState.lng, initialMapState.lat],
                 zoom: initialMapState.zoom,
                 pitch: initialMapState.pitch,
@@ -84,40 +124,17 @@ export const Map = ({ courseLinestring, riders }) => {
                     }
                 });
 
-                map.addSource('line', {
-                    type: 'geojson',
-                    lineMetrics: true,
-                    data: {
-                        "type": "FeatureCollection",
-                        "features": [
-                            courseLinestring
-                        ]
-                    }
-                });
-
-                map.addLayer({
-                    type: 'line',
-                    source: 'line',
-                    id: 'line',
-                    paint: {
-                        'line-color': 'rgba(255,0,0,1)',
-                        'line-width': 5
-                    },
-                    layout: {
-                        'line-cap': 'round',
-                        'line-join': 'round'
-                    }
-                });
-
                 addRiders(map);
 
                 map.on('moveend', () => {
-                    if (map.getZoom() < 13.0) {
+                    if (map.getZoom() < 14.0) {
                         setActiveRidersID([]);
+                        setAnimation(false);
                     } else {
                         if (map.getLayer('riders')) {
                             const activeRiders = map.queryRenderedFeatures({ layers: ['riders'] });
                             setActiveRidersID(activeRiders.map(rider => rider.properties.id));
+                            setAnimation(true);
                         }
                     }
                 });
@@ -138,7 +155,7 @@ export const Map = ({ courseLinestring, riders }) => {
         const runWorker = () => {
             if (map.getLayer('riders')) {
                 postMes(riders);
-                worker.onerror = err => err;
+                worker.onerror = err => console.log(err);
                 worker.onmessage = e => {
                     const { newRidersArr } = e.data;
                     if (map && newRidersArr) {
@@ -155,14 +172,14 @@ export const Map = ({ courseLinestring, riders }) => {
             }
         };
 
-        if (riders && activeRidersID.length > 0) {
+        if (animation && riders && activeRidersID.length > 0) {
             runWorker();
         } else {
             worker.terminate();
         }
 
         return () => worker.terminate();
-    }, [map, activeRidersID]);
+    }, [map, animation ]);
 
     return (
         <div ref={mapRef} className='map-live' />
