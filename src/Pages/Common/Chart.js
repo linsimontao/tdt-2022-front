@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import { courseContext } from './Home';
 import {
     scaleLinear,
     axisBottom,
@@ -29,19 +28,16 @@ const useResizeObserver = ref => {
     return dimension;
 }
 
-export const Chart = () => {
+export const Chart = ({ courseData, setDistance, terrain, setTerrain }) => {
     const svgRef = useRef();
     const divRef = useRef();
-    const brushRef = useRef();
-
+    
     const dimension = useResizeObserver(divRef);
 
-    const { courseData, distance, setDistance, animation, setAnimation } = useContext(courseContext)
-    const courseLineString = lineString(courseData.map(d => d.coordinates));
+    const courseLineString = lineString(courseData.features.map(d => d.geometry.coordinates));
     const courseDistance = lineDistance(courseLineString);
 
-    //useCallback?
-    const findIdx = dis => courseData.filter(pt => pt.distance <= dis).length;
+    const findIdx = dis => courseData.features.filter(pt => pt.properties.dis <= dis).length;
 
     useEffect(() => {
         const svg = select(svgRef.current);
@@ -49,14 +45,14 @@ export const Chart = () => {
         const { width, height } = dimension;
         const xScale = scaleLinear()
             .domain([0, courseDistance])
-            .range([0, width]);
+            //.range([0, width-50]);
+            .range([0, width - 25]);
         const xAxis = axisBottom(xScale);
         const yScale = scaleLinear()
-            .domain([min(courseData.map(d => d.elevation)), max(courseData.map(d => d.elevation))])
-            .range([height, 0]);
+            .domain([min(courseData.features.map(d => d.properties.ele)), max(courseData.features.map(d => d.properties.ele))])
+            .range([height-10, 10]);
         const yAxis = axisLeft(yScale);
 
-        //svg.selectAll
         svg
             .select(".x-axis")
             .style("transform", `translateY(${height}px)`)
@@ -66,63 +62,53 @@ export const Chart = () => {
             .call(yAxis)
 
         const lineGenerator = line()
-            .x((d, i) => xScale(courseData[i].distance))
+            .x((d, i) => xScale(courseData.features[i].properties.dis))
             .y(yScale)
             .curve(curveCardinal);
 
-        const content = svg.select(".content");
+        const content = svg.select(".chart-content");
+        content.selectAll("*").remove();
 
         content
             .selectAll(".link")
-            .data([courseData.map(d => d.elevation)])
+            .data([courseData.features.map(d => d.properties.ele)])
             .join("path")
-            .attr("class", "link")
+            .attr("className", "link")
             .attr("d", lineGenerator)
-            .attr("fill", "none")
+            .attr("fill", "blue")
             .attr("stroke", "blue");
         
         svg.on('mousemove', (evt) => {
-            if (!animation && evt.offsetX >= 0) {
+            if (evt.offsetX >= 0) {
                 const dis = xScale.invert(evt.offsetX);
                 setDistance(dis);
                 const index = findIdx(dis);
-                const pt = courseData[index];
+                const pt = courseData.features[index];
                 content
                     .selectAll(".dot")
                     .data([pt])
                     .join("circle")
                     .attr("class", "dot")
-                    .attr("cx", xScale(pt.distance))
-                    .attr("cy", yScale(pt.elevation))
+                    .attr("cx", xScale(pt?.properties.dis))
+                    .attr("cy", yScale(pt?.properties.ele))
                     .attr("r", 3)
                     .attr("fill", "red");
             }
         })
-
-        if (animation) {
-            const idx = findIdx(distance);
-            const pt = courseData[idx];
-            content
-                    .selectAll(".dot")
-                    .data([pt])
-                    .join("circle")
-                    .attr("class", "dot")
-                    .attr("cx", xScale(pt.distance))
-                    .attr("cy", yScale(pt.elevation))
-                    .attr("r", 3)
-                    .attr("fill", "red");
-        }
-
-    }, [dimension, animation, distance])
+    }, [dimension, courseData])
 
     return (
-        <div className="chartContainer" ref={divRef}>
+        <div className={terrain? "chart-container": "chart-container-hide"} ref={divRef}>
             <svg ref={svgRef}>
-                <g className="content"></g>
+                <g className="chart-content"></g>
                 <g className="x-axis"></g>
                 <g className="y-axis"></g>
-                <g ref={brushRef} />
             </svg>
+            <div className="chart-button" onClick={() => setTerrain(!terrain)}>
+                <p>
+                    TERRAIN
+                </p>
+            </div>
         </div>
     );
 }

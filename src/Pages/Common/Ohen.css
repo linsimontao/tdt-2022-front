@@ -1,0 +1,25 @@
+.ohen-button {
+    position: relative;
+    bottom: 134px;
+    right: 39px;
+    width: 107px;
+    height: 96px;
+    margin-left: auto;
+    margin-top: auto;
+    transition: 500ms;
+}
+.ohen-button-terrain {
+    position: relative;
+    bottom: 284px;
+    right: 39px;
+    width: 107px;
+    height: 96px;
+    margin-left: auto;
+    margin-top: auto;
+    transition: 500ms;
+}
+
+.ohen-img {
+    width: 100%;
+    height: 100%;
+}

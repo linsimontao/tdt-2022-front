@@ -1,0 +1,98 @@
+.map-chart-container {
+    display: block;
+    height: 100%;
+}
+
+.chart-button {
+    height: 25px;
+    width: 101px;
+    position: relative;
+    left: 100px;
+    top: -175px;
+    background-color: white;
+    border-radius: 3px 3px 0px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.chart-button p {
+    position: absolute;
+    bottom: 0;
+    font-size: 13px;
+}
+
+.chart-container {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    overflow: visible;
+    background-color: white;
+    height: 151px;
+    transition: 500ms;
+}
+
+.chart-container-hide {
+    position: absolute;
+    bottom: -145px;
+    width: 100%;
+    overflow: visible;
+    background-color: white;
+    height: 151px;
+    transition: 500ms;
+}
+
+@media only screen and (max-width: 600px) {
+    .chart-container {
+        display: none;
+    }
+
+    .chart-container-hide {
+        display: none;
+    }
+    .map {
+        width: 100%;
+        height: 100%;
+    }
+    .ohen-button-terrain,
+    .ohen-button {
+        position: relative;
+        bottom: 184px;
+        right: 39px;
+        width: 75px;
+        height: 67px;
+        margin-left: auto;
+        margin-top: auto;
+        transition: 500ms;
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .chart-container {
+        display: none;
+    }
+    .chart-container-hide {
+        display: none;
+    }
+    .map {
+        width: 100%;
+        height: 100%;
+    }
+    .ohen-button-terrain,
+    .ohen-button {
+        position: relative;
+        bottom: 84px;
+        right: 39px;
+        width: 75px;
+        height: 67px;
+        margin-left: auto;
+        margin-top: auto;
+        transition: 500ms;
+    }
+}
+
+.chart-container svg {
+    overflow: visible;
+    display: block;
+    width: 100%;
+    margin-left: 30px;
+}
