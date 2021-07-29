@@ -6,6 +6,7 @@ import course100 from '../../Data/Course100.json';
 import { Ohen } from '../Common/Ohen';
 import { SelectComponent } from '../Common/SelectComponent';
 import { MAP } from "../../constant/Constant";
+import { Switch } from '../Common/Switch';
 import './Terrain.css';
 
 const Course = [
@@ -38,9 +39,10 @@ export const Map = ({ active, setActive }) => {
     if (setActive) {
         setActive(MAP);
     }
-    const [activeCourseId, setActiveCourseId] = useState(0);
+    const [activeCourseId, setActiveCourseId] = useState(2);
     const [distance, setDistance] = useState(0);
     const [terrain, setTerrain] = useState(true);
+    const [style2D, setStyle2D] = useState(false);
 
     const courseChangedHandler = (e) => {
         setActiveCourseId(Course[e.target.selectedIndex].value)
@@ -52,11 +54,12 @@ export const Map = ({ active, setActive }) => {
 
     return (
         <div className="page">
-            <MapCourse activeCourseId={activeCourseId} courseData={activeCourseId === 0 ? course65 : course100} distance={distance} terrain={terrain} setTerrain={setTerrain} />
+            <MapCourse activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} courseData={activeCourseId === 0 ? course65 : course100} distance={distance} terrain={terrain} setTerrain={setTerrain} style2D={style2D}/>
             <Chart courseData={activeCourseId === 0 ? course65 : course100} setDistance={setDistance} terrain={terrain} setTerrain={setTerrain} />
             <Ohen terrain={terrain} />
             <SelectComponent data={Course} type={"course"} onChangeHandler={courseChangedHandler} />
             <SelectComponent data={Filter} type={"filter"} onChangeHandler={filterChangedHandler} />
+            <Switch style2D={style2D} setStyle2D={setStyle2D} />
         </div>
     );
 }

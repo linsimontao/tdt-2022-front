@@ -25,7 +25,7 @@ const marker = new mapboxgl.Marker({
 });
 const popup = new mapboxgl.Popup({ closeButton: false });
 
-export const MapCourse = ({ activeCourseId, courseData, distance, terrain, setTerrain }) => {
+export const MapCourse = ({ activeCourseId, setActiveCourseId, courseData, distance, terrain, setTerrain, style2D }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState();
     const [displayMarker, setDisplayMarker] = useState(false);
@@ -37,7 +37,7 @@ export const MapCourse = ({ activeCourseId, courseData, distance, terrain, setTe
         () => {
             const map = new mapboxgl.Map({
                 container: mapRef.current,
-                style: 'mapbox://styles/demo-sa-jp/ckqtbxxwz5wna17qzzymbdkqe',
+                style: 'mapbox://styles/hidenoriyagi/ckrlgj0cya9fm17p3pzz9fy5k',
                 center: [initialMapState.lng, initialMapState.lat],
                 zoom: initialMapState.zoom,
                 pitch: initialMapState.pitch,
@@ -65,12 +65,17 @@ export const MapCourse = ({ activeCourseId, courseData, distance, terrain, setTe
                 });
 
                 map.addControl(new ZoomControl(), 'top-right');
-
                 const popup_start = new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
                     .setLngLat([141.30531, 38.45812])
                     .setHTML('<h1>Hello!</h1>')
                     .addTo(map);
                 setMap(map);
+            });
+
+            map.once('idle', () => {
+                if (map) {
+                    setActiveCourseId(0); 
+                }
             });
 
             return () => {
@@ -95,16 +100,53 @@ export const MapCourse = ({ activeCourseId, courseData, distance, terrain, setTe
             }
         }
     }, [map, terrain, distance]);
+    
+    const show65KM = (visible) => {
+        console.log('65km', visible);
+                    
+        map?.setLayoutProperty('tdt-poi-065km', 'visibility', visible);
+        map?.setLayoutProperty('Course065km-3', 'visibility', visible);
+        map?.setLayoutProperty('Course065km-2', 'visibility', visible);
+        map?.setLayoutProperty('Course065km-1', 'visibility', visible);
+        map?.setLayoutProperty('Course065km-0', 'visibility', visible);
+    }
+
+    const show100KM = (visible) => {
+        console.log('100km', visible);
+        
+        map?.setLayoutProperty('tdt-poi-100km', 'visibility', visible);
+        map?.setLayoutProperty('Course100km-3', 'visibility', visible);
+        map?.setLayoutProperty('Course100km-2', 'visibility', visible);
+        map?.setLayoutProperty('Course100km-1', 'visibility', visible);
+        map?.setLayoutProperty('Course100km-0', 'visibility', visible);
+    }
 
     useEffect(() => {
-        if (activeCourseId === 0) {
-            map?.setLayoutProperty('tracks-65', 'visibility', 'visible');
-            map?.setLayoutProperty('tracks-100', 'visibility', 'none');
-        } else {
-            map?.setLayoutProperty('tracks-65', 'visibility', 'none');
-            map?.setLayoutProperty('tracks-100', 'visibility', 'visible');
+        if (map) {
+            if (activeCourseId === 0) {
+                show65KM('visible');
+                show100KM('none');
+            } else if (activeCourseId === 1) {
+                show65KM('none');
+                show100KM('visible');    
+            } else {
+                show65KM('none');
+                show100KM('none'); 
+            }
         }
     }, [activeCourseId]);
+
+    useEffect(() => {
+        if (map) {
+            const activeCourseId_local = activeCourseId;
+            setActiveCourseId(2);
+            map.setStyle( style2D? 'mapbox://styles/hidenoriyagi/ckqjhj7kj2lzt18p54hc3ee2j': 'mapbox://styles/hidenoriyagi/ckrlgj0cya9fm17p3pzz9fy5k');
+            map.once('idle', () => {
+                setActiveCourseId(activeCourseId_local);
+            }) 
+        }
+        //activeCourseId === 0? show65KM('visible'): show100KM('visible');
+    }, [style2D])
 
     return (
         <>
