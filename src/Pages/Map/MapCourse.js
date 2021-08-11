@@ -108,8 +108,6 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
     }, [map, terrain, distance]);
     
     const show65KM = (visible) => {
-        console.log('65km', visible);
-                    
         map?.setLayoutProperty('tdt-poi-065km', 'visibility', visible);
         map?.setLayoutProperty('Course065km-3', 'visibility', visible);
         map?.setLayoutProperty('Course065km-2', 'visibility', visible);
@@ -118,8 +116,6 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
     }
 
     const show100KM = (visible) => {
-        console.log('100km', visible);
-        
         map?.setLayoutProperty('tdt-poi-100km', 'visibility', visible);
         map?.setLayoutProperty('Course100km-3', 'visibility', visible);
         map?.setLayoutProperty('Course100km-2', 'visibility', visible);

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { InfoIcon, RiderIcon, MapIcon, ShareIcon } from "../Pages/Common/CustomSVG";
 import { RIDER, MAP, INFO, SHARE } from '../constant/Constant';

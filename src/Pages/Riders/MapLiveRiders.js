@@ -28,7 +28,7 @@ const getGeojson = features => features.map(
 export const MapRiders = ({ courseLinestring, riders }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
-    const [activeRidersID, setActiveRidersID] = useState([]);
+    //const [activeRidersID, setActiveRidersID] = useState([]);
     const [animation, setAnimation] = useState(false);
     const worker = new Worker('./ridersupdate.js');
 
@@ -54,26 +54,25 @@ export const MapRiders = ({ courseLinestring, riders }) => {
             'type': 'symbol',
             'source': 'riders',
             'filter': ['has', 'point_count'],
-            //'maxZoom': 13,
+            'paint': {
+                'text-color': '#FFFFFF'
+            },
             'layout': {
                 'icon-image': 'ridericon-big',
                 'icon-offset': [0, -10],
-                'icon-allow-overlap': true
-            }
-        });
-        map.addLayer({
-            id: 'cluster-count',
-            type: 'symbol',
-            source: 'riders',
-            //maxZoom: 13,
-            filter: ['has', 'point_count'],
-            paint: {
-                'text-color': '#FFFFFF'
-            },
-            layout: {
-                'text-field': '{point_count_abbreviated}',
+                'icon-allow-overlap': true,
+                'text-field': [
+                    'format',
+                    ['get', 'point_count_abbreviated'],
+                    { 'font-scale': 1.5 },
+                    '\n',
+                    'RIDERS',
+                    { 'font-scale': 0.8 },
+                ], 
                 'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                'text-size': 20
+                'text-size': 20,
+                'text-offset': [3, -0.5],
+                'text-justify': 'left'
             }
         });
 
@@ -81,7 +80,6 @@ export const MapRiders = ({ courseLinestring, riders }) => {
             id: 'riders',
             type: 'symbol',
             source: 'riders',
-            //minZoom: 14,
             filter: ['!', ['has', 'point_count']],
             layout: {
                 'icon-image': 'ridericon-small',
@@ -95,7 +93,6 @@ export const MapRiders = ({ courseLinestring, riders }) => {
         () => {
             const map = new mapboxgl.Map({
                 container: mapRef.current,
-                //style: 'mapbox://styles/demo-sa-jp/cknyf2c0l0dmz17pm4ejbde6t',
                 style: 'mapbox://styles/hidenoriyagi/ckpzg4tid2q6f17pe4d9da7im',
                 center: [initialMapState.lng, initialMapState.lat],
                 zoom: initialMapState.zoom,
@@ -128,12 +125,12 @@ export const MapRiders = ({ courseLinestring, riders }) => {
 
                 map.on('moveend', () => {
                     if (map.getZoom() < 14.0) {
-                        setActiveRidersID([]);
+                        //setActiveRidersID([]);
                         setAnimation(false);
                     } else {
                         if (map.getLayer('riders')) {
-                            const activeRiders = map.queryRenderedFeatures({ layers: ['riders'] });
-                            setActiveRidersID(activeRiders.map(rider => rider.properties.id));
+                            //const activeRiders = map.queryRenderedFeatures({ layers: ['riders'] });
+                            //setActiveRidersID(activeRiders.map(rider => rider.properties.id));
                             setAnimation(true);
                         }
                     }
@@ -147,8 +144,7 @@ export const MapRiders = ({ courseLinestring, riders }) => {
     useEffect(() => {
         const postMes = (ridersArr) => {
             const data = {
-                ridersArr: ridersArr,
-                activeRidersIDArr: activeRidersID
+                ridersArr: ridersArr
             }
             worker.postMessage({ courseLinestring, data });
         }
@@ -172,14 +168,14 @@ export const MapRiders = ({ courseLinestring, riders }) => {
             }
         };
 
-        if (animation && riders && activeRidersID.length > 0) {
+        if (animation && riders) {
             runWorker();
         } else {
             worker.terminate();
         }
 
         return () => worker.terminate();
-    }, [map, animation ]);
+    }, [map, animation]);
 
     return (
         <div ref={mapRef} className='map-live' />

@@ -47,11 +47,10 @@ export const Chart = ({ courseData, setDistance, terrain, setTerrain }) => {
         const { width, height } = dimension;
         const xScale = scaleLinear()
             .domain([0, courseDistance])
-            //.range([0, width-50]);
             .range([0, width - 25]);
         const xAxis = axisBottom(xScale);
         const yScale = scaleLinear()
-            .domain([min(courseData.features.map(d => d.properties.ele)), max(courseData.features.map(d => d.properties.ele))])
+            .domain([min(courseData.features.map(d => Number(d.properties.ele))), max(courseData.features.map(d => Number(d.properties.ele)))])
             .range([height-10, 10]);
         const yAxis = axisLeft(yScale);
 
