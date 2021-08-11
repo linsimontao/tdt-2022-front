@@ -40,6 +40,7 @@ export const Map = ({ active, setActive }) => {
         setActive(MAP);
     }
     const [activeCourseId, setActiveCourseId] = useState(2);
+    const [activeFilterdId, setActiveFilterdId] = useState(2);
     const [distance, setDistance] = useState(0);
     const [terrain, setTerrain] = useState(true);
     const [style2D, setStyle2D] = useState(false);
@@ -49,12 +50,13 @@ export const Map = ({ active, setActive }) => {
     }
 
     const filterChangedHandler = (e) => {
+        setActiveFilterdId(Filter[e.target.selectedIndex].value)
         console.log(e.target.selectedIndex);
     }
 
     return (
         <div className="page">
-            <MapCourse activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} courseData={activeCourseId === 0 ? course65 : course100} distance={distance} terrain={terrain} setTerrain={setTerrain} style2D={style2D}/>
+            <MapCourse activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activeFilterdId={activeFilterdId }setActiveFilterdId={setActiveFilterdId} courseData={activeCourseId === 0 ? course65 : course100} distance={distance} terrain={terrain} setTerrain={setTerrain} style2D={style2D}/>
             <Chart courseData={activeCourseId === 0 ? course65 : course100} setDistance={setDistance} terrain={terrain} setTerrain={setTerrain} />
             <Ohen terrain={terrain} />
             <SelectComponent data={Course} type={"course"} onChangeHandler={courseChangedHandler} />
