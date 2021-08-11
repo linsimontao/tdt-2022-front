@@ -18,7 +18,15 @@
 .chart-button p {
     position: absolute;
     bottom: 0;
+    left: 15px;
     font-size: 13px;
+}
+
+.chart-button img {
+    position: absolute;
+    bottom: 5px;
+    left: 75px;
+    height: 8px;
 }
 
 .chart-container {

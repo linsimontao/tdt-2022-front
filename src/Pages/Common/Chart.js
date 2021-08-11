@@ -10,6 +10,8 @@ import {
     curveCardinal
 } from 'd3';
 import { lineString, lineDistance } from '@turf/turf';
+import up from './up.png';
+import down from './down.png';
 
 const useResizeObserver = ref => {
     const [dimension, setDimension] = useState(null);
@@ -105,9 +107,8 @@ export const Chart = ({ courseData, setDistance, terrain, setTerrain }) => {
                 <g className="y-axis"></g>
             </svg>
             <div className="chart-button" onClick={() => setTerrain(!terrain)}>
-                <p>
-                    TERRAIN
-                </p>
+                <p>TERRAIN</p>
+                <img src={terrain? up: down} />
             </div>
         </div>
     );

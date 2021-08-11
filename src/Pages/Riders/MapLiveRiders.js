@@ -33,10 +33,10 @@ export const MapRiders = ({ courseLinestring, riders }) => {
     const worker = new Worker('./ridersupdate.js');
 
     const addRiders = (map) => {
-        map.loadImage('./icon.png', (error, image) => {
+        map.loadImage('./smile.png', (error, image) => {
             if (error) throw error;
-            map.addImage('ridericon-small', image, { pixelRatio: 5 });
-            map.addImage('ridericon-big', image, { pixelRatio: 3 });
+            map.addImage('ridericon-small', image, { pixelRatio: 2 });
+            map.addImage('ridericon-big', image, { pixelRatio: 1 });
         })
         map.addSource('riders', {
             'type': 'geojson',
