@@ -2,12 +2,13 @@ import './Info.css';
 import { INFO } from '../../constant/Constant';
 import { useHistory } from "react-router-dom";
 
-export const Info = ({ setActive }) => {
+export const Info = ({ setActive, setInfoDisplayed }) => {
+    setInfoDisplayed(true);
     setActive(INFO);
     const history = useHistory();
         
     const clickHandler = () => {
-        history.push("/MAP");
+        history.push("/");
     };
 
     return (

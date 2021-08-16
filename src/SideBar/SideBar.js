@@ -17,12 +17,12 @@ const data = [
         title: INFO,
         path: '/info',
         icon: <InfoIcon fill="#000" width="17.58" height="17.58"/>
-    },
-    {
-        title: SHARE,
-        path: '/info',
-        icon: <ShareIcon fill="#000" width="12.83" height="14"/>
     }
+    // {
+    //     title: SHARE,
+    //     path: '/info',
+    //     icon: <ShareIcon fill="#000" width="12.83" height="14"/>
+    // }
 ];
 
 export const SideBar = ({active, setActive}) => {
@@ -32,7 +32,7 @@ export const SideBar = ({active, setActive}) => {
                 <div className="sidebar-icon-list">
                     {data.map((item, i) => {
                         return (
-                            <Link to={item.path} onClick={() => setActive(item.title)}>
+                            <Link key={`${item.title}-${i}`} to={item.path} onClick={() => setActive(item.title)}>
                                 <div className={active === item.title? "sidebar-icon-item-active": "sidebar-icon-item"} >
                                     {item.icon}
                                     <p>{item.title}</p>

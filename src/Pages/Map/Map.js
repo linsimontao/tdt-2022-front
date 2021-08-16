@@ -51,7 +51,6 @@ export const Map = ({ active, setActive }) => {
 
     const filterChangedHandler = (e) => {
         setActiveFilterdId(Filter[e.target.selectedIndex].value)
-        console.log(e.target.selectedIndex);
     }
 
     return (

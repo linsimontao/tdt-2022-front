@@ -125,8 +125,6 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
 
     // 
     const showCourse = (map) => {
-        console.log('showCourse');
-
         const popup_course_1 = new mapboxgl.Popup({ offset: [0,-50],closeOnClick: false, closeButton: false })
         .setLngLat([141.314630, 38.417032]).setHTML(
             `<div class="course-label"><span class="course-label-detail">9</span></div><div class="course-youtube-player"><iframe class="course-youtube-player" src="https://www.youtube.com/embed/nOJyxG9-JLk?autoplay=1&mute=1&controls=0" title=""
@@ -145,15 +143,11 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
 
     //
     const hiddenCourse = () => {
-        console.log('hiddenCourse');
         course1.remove();
     }
 
-
     // 
     const showLive = (map) => {
-        console.log('showLive');
-    
         // スタート・ゴール地点
         const popup_start_1 = new mapboxgl.Popup({ offset: [0,-50],closeOnClick: false, closeButton: false })
         .setLngLat([141.304630, 38.457032]).setHTML(
@@ -195,7 +189,6 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
 
     }
     const hiddenLive = () => {
-        console.log('hiddenLive');
         popup1.remove();
         popup2.remove();
         popup3.remove();

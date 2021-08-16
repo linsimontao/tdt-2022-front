@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   HashRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import { TitleBar } from './TitleBar/TitleBar';
 import { SideBar } from './SideBar/SideBar';
@@ -13,6 +14,25 @@ import './App.css';
 
 function App() {
   const [active, setActive] = useState('RIDER');
+  const [infoDisplayed, setInfoDisplayed] = useState(null);
+  
+  useEffect(() => {
+    const display = JSON.parse(window.localStorage.getItem('infoDisplayed')); 
+    if (display === null) {
+      setInfoDisplayed(false);
+    } else {
+      setInfoDisplayed(display);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('infoDisplayed', infoDisplayed);
+  }, [infoDisplayed]);
+
+  if (infoDisplayed === null) {
+    return (<div>loading</div>);
+  }
+
   return (
     <Router>
       <div className="App">
@@ -21,14 +41,18 @@ function App() {
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Riders setActive={setActive}/>
+              {
+                infoDisplayed? 
+                  <Riders setActive={setActive} />:
+                  <Redirect to="/info" />
+              }
             </Route>
             <Route exact path="/map">
               <Map setActive={setActive} />
             </Route>
             <Route exact path="/info">
-              <Map/>
-              <Info setActive={setActive}/>
+              <Riders />
+              <Info setActive={setActive} setInfoDisplayed={setInfoDisplayed} />
             </Route>
           </Switch>
         </div>
