@@ -37,6 +37,12 @@
     color: #666666;
 }
 
+.info-text-small {
+    font-size: 11px;
+    white-space: pre-line;
+    color: #666666;
+}
+
 .info-text-bold {
     font-size: 15px;
     font-weight: bold;

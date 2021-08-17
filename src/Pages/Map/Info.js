@@ -7,6 +7,7 @@ import {
     INFO_CONTENT_PLAIN3, 
     INFO_CONTENT_PLAIN4, 
     INFO_CONTENT_PLAIN5,
+    INFO_CONTENT_SMALL,
     INFO_CONTENT_BOLD1, 
     INFO_CONTENT_BOLD2, 
     INFO_CONTENT_BOLD3, 
@@ -45,9 +46,10 @@ export const Info = ({ setActive, setInfoDisplayed }) => {
                 <span className="info-text-plain">{INFO_CONTENT_PLAIN3}</span>
                 <span className="info-text-bold">{INFO_CONTENT_BOLD3}</span>
                 <span className="info-text-plain">{INFO_CONTENT_PLAIN4}</span>
-                <a href={INFO_CONTENT_LINK2}><span className="info-text-plain">{INFO_CONTENT_LINK2}</span></a>
-                <span className="info-text-plain">{INFO_CONTENT_PLAIN5}</span>
-                <a href={INFO_CONTENT_LINK3}><span className="info-text-plain">{INFO_CONTENT_LINK3}</span></a>
+                <span className="info-text-small">{INFO_CONTENT_SMALL}</span>
+                <a href={INFO_CONTENT_LINK2}><span className="info-text-small">{INFO_CONTENT_LINK2}</span></a>
+                <span className="info-text-small">{INFO_CONTENT_PLAIN5}</span>
+                <a href={INFO_CONTENT_LINK3}><span className="info-text-small">{INFO_CONTENT_LINK3}</span></a>
             </div>
         </div>
     );
