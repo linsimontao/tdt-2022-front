@@ -1,11 +1,11 @@
-
 .info {
     position: absolute;
     top: 37px;
-width: 550px;
-max-height: 100%;
-background-color: white;
-border-radius: 15px;
+    width: 550px;
+    max-height: 755px;
+    height: calc(100% - 37px);
+    background-color: white;
+    border-radius: 15px;
 }
 
 .info-title {
@@ -13,36 +13,55 @@ border-radius: 15px;
     height: 54px;
     justify-content: center;
     display: flex;
+    align-items: center;
 }
 
 .info-divider {
-width: calc(100% - 2px);
-height: 0px;
-border: 0.5px solid #DEDEDE;
+    width: calc(100% - 2px);
+    height: 0px;
+    border: 0.5px solid #DEDEDE;
 }
 
 .info-body {
-    width: 100%;
-    margin: 34px;
-    max-height: 300px;
+    max-width: 100%;
+    margin: 18px 25px 25px 18px;
+    height: calc(100% - 90px);
+    overflow-y: auto;
+    line-height: 1.2em;
 }
 
-.info-text {
+.info-text-plain {
     font-size: 14px;
+    white-space: pre-line;
+    letter-spacing: 0.7px;
+    color: #666666;
 }
 
-.info-bottom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+.info-text-bold {
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.75px;
+    color: #666666;
 }
 
-.info-btn {
-    border-radius: 100px;
-    width: 125px;
-    height: 30px;
-    background-color: black;
-    color: white;
-    font-size: 13px;
+.info-close {
+    z-index: 1;
+    position: absolute;
+    top: 21px;
+    left: 18px;
+    cursor: pointer;
 }
+
+*::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background-color: #F7F7F7;
+    ;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color:#666666;
+  }
+  

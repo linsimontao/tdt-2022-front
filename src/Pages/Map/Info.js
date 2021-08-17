@@ -1,12 +1,27 @@
 import './Info.css';
-import { INFO } from '../../constant/Constant';
+import { 
+    INFO, 
+    INFO_CONTENT_PLAIN1_PART1, 
+    INFO_CONTENT_PLAIN1_PART2,
+    INFO_CONTENT_PLAIN2, 
+    INFO_CONTENT_PLAIN3, 
+    INFO_CONTENT_PLAIN4, 
+    INFO_CONTENT_PLAIN5,
+    INFO_CONTENT_BOLD1, 
+    INFO_CONTENT_BOLD2, 
+    INFO_CONTENT_BOLD3, 
+    INFO_CONTENT_LINK1,
+    INFO_CONTENT_LINK2,
+    INFO_CONTENT_LINK3
+} from '../../constant/Constant';
 import { useHistory } from "react-router-dom";
+import { CloseIcon } from '../Common/CustomSVG';
 
 export const Info = ({ setActive, setInfoDisplayed }) => {
     setInfoDisplayed(true);
     setActive(INFO);
     const history = useHistory();
-        
+
     const clickHandler = () => {
         history.push("/");
     };
@@ -14,14 +29,25 @@ export const Info = ({ setActive, setInfoDisplayed }) => {
     return (
         <div className="info">
             <div className="info-title">
-                <h2>本サービスについて</h2>
+                <div className="info-close" onClick={clickHandler}>
+                    <CloseIcon />
+                </div>
+                <h2>リアルタイムマップ東北応援企画</h2>
             </div>
             <div className="info-divider"></div>
             <div className="info-body">
-                <p className="info-text">Dummy</p>
-            </div>
-            <div className="info-bottom">
-                <button className="info-btn" onClick={ clickHandler }>閉じる</button>
+                <span className="info-text-plain">{INFO_CONTENT_PLAIN1_PART1}</span>
+                <a href={INFO_CONTENT_LINK1}><span className="info-text-plain">{INFO_CONTENT_LINK1}</span></a>
+                <span className="info-text-plain">{INFO_CONTENT_PLAIN1_PART2}</span>
+                <span className="info-text-bold">{INFO_CONTENT_BOLD1}</span>
+                <span className="info-text-plain">{INFO_CONTENT_PLAIN2}</span>
+                <span className="info-text-bold">{INFO_CONTENT_BOLD2}</span>
+                <span className="info-text-plain">{INFO_CONTENT_PLAIN3}</span>
+                <span className="info-text-bold">{INFO_CONTENT_BOLD3}</span>
+                <span className="info-text-plain">{INFO_CONTENT_PLAIN4}</span>
+                <a href={INFO_CONTENT_LINK2}><span className="info-text-plain">{INFO_CONTENT_LINK2}</span></a>
+                <span className="info-text-plain">{INFO_CONTENT_PLAIN5}</span>
+                <a href={INFO_CONTENT_LINK3}><span className="info-text-plain">{INFO_CONTENT_LINK3}</span></a>
             </div>
         </div>
     );

@@ -70,3 +70,9 @@ export const Mainlogo = () => (
         </g>
     </svg>
 );
+
+export const CloseIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="15.718" height="15.718" viewBox="0 0 15.718 15.718">
+    <g transform="translate(7.859) rotate(45)">
+        <path class="a" d="M6.251,4.864V0H4.864V4.864H0V6.251H4.864v4.864H6.251V6.251h4.864V4.864Z" />
+    </g>
+</svg>)
