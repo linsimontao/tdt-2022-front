@@ -6,6 +6,8 @@
     height: calc(100% - 37px);
     background-color: white;
     border-radius: 15px;
+    max-width: 100%;
+    min-width: 450px;
 }
 
 .info-title {
@@ -71,3 +73,16 @@
     background-color:#666666;
   }
   
+  @media only screen and (max-width: 600px) {
+    .info {
+        position: absolute;
+        top: 37px;
+        width: 550px;
+        max-height: 755px;
+        height: calc(100% - 140px);
+        background-color: white;
+        border-radius: 15px;
+        max-width: 100%;
+        min-width: 450px;
+    }
+  }
