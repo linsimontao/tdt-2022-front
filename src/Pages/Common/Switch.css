@@ -5,8 +5,7 @@
     top: 27px;
     right: 32px;
     border-radius: 5px;
-    background-color: white;
-    border-color: black;
+    border-color: white;
     cursor: pointer;
 }
 
@@ -18,6 +17,10 @@
     right: 32px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: black;
     border-color: white;
+}
+
+.switch-image {
+    width: 30px;
+    height: 30px;
 }
