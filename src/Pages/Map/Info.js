@@ -33,7 +33,7 @@ export const Info = ({ setActive, setInfoDisplayed }) => {
                 <div className="info-close" onClick={clickHandler}>
                     <CloseIcon />
                 </div>
-                <h2>リアルタイムマップ東北応援企画</h2>
+                <h3>リアルタイムマップ東北応援企画</h3>
             </div>
             <div className="info-divider"></div>
             <div className="info-body">

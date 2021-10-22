@@ -151,7 +151,7 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
         // スタート・ゴール地点
         const popup_start_1 = new mapboxgl.Popup({ offset: [0,-50],closeOnClick: false, closeButton: false })
         .setLngLat([141.304630, 38.457032]).setHTML(
-            `<div class="live-videos-label">LIVE</div><div class= "live-youtube-player"><iframe width="80" height="80" src="https://www.youtube.com/embed/nOJyxG9-JLk?autoplay=1&mute=1&controls=0" title=""
+            `<div class="live-videos-label">LIVE</div><div class= "live-youtube-player"><iframe width="106" height="60" src="https://www.youtube.com/embed/nOJyxG9-JLk?autoplay=1&mute=1&controls=0" title=""
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
              </div>
@@ -164,7 +164,7 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
         // 女川AS
         const popup_start_2 = new mapboxgl.Popup({offset: [0,-35], closeOnClick: false, closeButton: false })
         .setLngLat([141.446953, 38.444997]).setHTML(
-            `<div class="live-videos-label">LIVE</div><div class= "live-youtube-player"><iframe width="80" height="80" src="https://www.youtube.com/embed/ntBlmTrDVjw?autoplay=1&mute=1&controls=0" title=""
+            `<div class="live-videos-label">LIVE</div><div class= "live-youtube-player"><iframe width="106" height="60" src="https://www.youtube.com/embed/ntBlmTrDVjw?autoplay=1&mute=1&controls=0" title=""
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
              </div>
@@ -177,7 +177,7 @@ export const MapCourse = ({ activeCourseId, setActiveCourseId, activeFilterdId, 
         // 雄勝AS
         const popup_start_3 = new mapboxgl.Popup({ offset: [0,-62],closeOnClick: false, closeButton: false })
         .setLngLat([141.466010, 38.511783]).setHTML(
-            `<div class="live-videos-label">LIVE</div><div class= "live-youtube-player"><iframe width="80" height="80" src="https://www.youtube.com/embed/a3Yw0RNUetI?autoplay=1&mute=1&controls=0" title=""
+            `<div class="live-videos-label">LIVE</div><div class= "live-youtube-player"><iframe width="106" height="60" src="https://www.youtube.com/embed/a3Yw0RNUetI?autoplay=1&mute=1&controls=0" title=""
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
              </div>

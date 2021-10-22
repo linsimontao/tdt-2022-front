@@ -2,7 +2,7 @@
     position: absolute;
     top: 37px;
     width: 550px;
-    max-height: 755px;
+    max-height: 718px;
     height: calc(100% - 37px);
     background-color: white;
     border-radius: 15px;
@@ -26,7 +26,7 @@
 
 .info-body {
     max-width: 100%;
-    margin: 18px 25px 25px 18px;
+    margin: 18px 18px 18px 18px;
     height: calc(100% - 90px);
     overflow-y: auto;
     line-height: 1.2em;
@@ -37,12 +37,16 @@
     white-space: pre-line;
     letter-spacing: 0.7px;
     color: #666666;
+    width: calc(100% - 8px);
+    display: block;
 }
 
 .info-text-small {
     font-size: 11px;
     white-space: pre-line;
     color: #666666;
+    width: calc(100% - 8px);
+    display: block;
 }
 
 .info-text-bold {

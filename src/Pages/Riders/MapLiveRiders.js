@@ -33,11 +33,17 @@ export const MapRiders = ({ courseLinestring, riders }) => {
     const worker = new Worker('./ridersupdate.js');
 
     const addRiders = (map) => {
-        map.loadImage('./smile.png', (error, image) => {
+        map.loadImage('./rider.png', (error, image) => {
             if (error) throw error;
-            map.addImage('ridericon-small', image, { pixelRatio: 2 });
-            map.addImage('ridericon-big', image, { pixelRatio: 1 });
+            map.addImage('ridericon-small', image, { pixelRatio: 4 });
+            map.addImage('ridericon-big', image, { pixelRatio: 2 });
         })
+        map.loadImage('./rider-flip.png', (error, image) => {
+            if (error) throw error;
+            map.addImage('ridericon-flip-small', image, { pixelRatio: 4 });
+            map.addImage('ridericon-flip-big', image, { pixelRatio: 2 });
+        })
+
         map.addSource('riders', {
             'type': 'geojson',
             'data': {
@@ -46,7 +52,10 @@ export const MapRiders = ({ courseLinestring, riders }) => {
             },
             cluster: true,
             clusterMaxZoom: 13,
-            clusterRadius: 128
+            clusterRadius: 128,
+            clusterProperties: {
+                "maxdis": ["max", ["get", "dis"]],
+            }
         });
 
         map.addLayer({
@@ -58,7 +67,12 @@ export const MapRiders = ({ courseLinestring, riders }) => {
                 'text-color': '#FFFFFF'
             },
             'layout': {
-                'icon-image': 'ridericon-big',
+                'icon-image': [
+                    'case',
+                    ['<', ['get', 'maxdis'], 40000],
+                    'ridericon-big',
+                    'ridericon-flip-big'
+                ],
                 'icon-offset': [0, -10],
                 'icon-allow-overlap': true,
                 'text-field': [
@@ -68,21 +82,25 @@ export const MapRiders = ({ courseLinestring, riders }) => {
                     '\n',
                     'RIDERS',
                     { 'font-scale': 0.8 },
-                ], 
+                ],
                 'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
                 'text-size': 20,
                 'text-offset': [3, -0.5],
                 'text-justify': 'left'
             }
         });
-
         map.addLayer({
             id: 'riders',
             type: 'symbol',
             source: 'riders',
             filter: ['!', ['has', 'point_count']],
             layout: {
-                'icon-image': 'ridericon-small',
+                'icon-image': [
+                    'case',
+                    ['<', ['get', 'dis'], 40000],
+                    'ridericon-small',
+                    'ridericon-flip-small'
+                ],
                 'icon-offset': [0, -10],
                 'icon-allow-overlap': true
             }
