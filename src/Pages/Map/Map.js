@@ -57,7 +57,7 @@ export const Map = ({ active, setActive }) => {
         <div className="page">
             <MapCourse activeCourseId={activeCourseId} setActiveCourseId={setActiveCourseId} activeFilterdId={activeFilterdId }setActiveFilterdId={setActiveFilterdId} courseData={activeCourseId === 0 ? course65 : course100} distance={distance} terrain={terrain} setTerrain={setTerrain} style2D={style2D}/>
             <Chart courseData={activeCourseId === 0 ? course65 : course100} setDistance={setDistance} terrain={terrain} setTerrain={setTerrain} />
-            <Ohen terrain={terrain} />
+            {/* <Ohen terrain={terrain} /> */}
             <SelectComponent data={Course} type={"course"} onChangeHandler={courseChangedHandler} />
             <SelectComponent data={Filter} type={"filter"} onChangeHandler={filterChangedHandler} />
             <Switch style2D={style2D} setStyle2D={setStyle2D} />
